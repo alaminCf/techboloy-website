@@ -20,6 +20,9 @@ import { allTeamMembers as initialTeamMembers } from '../data/team';
 import { insightsData as initialInsightsData } from '../data/insights';
 import { testimonialsData as initialTestimonialsData } from '../data/testimonials';
 import { partnersData as initialPartnersData } from '../data/partners';
+import { initialSectionsData, SectionItem, CustomSectionLayout, SectionType } from '../data/sections';
+
+export type { SectionItem, CustomSectionLayout, SectionType };
 
 export interface InboundInquiry {
   id: string;
@@ -45,6 +48,19 @@ interface CMSContextType {
   testimonials: Testimonial[];
   partners: Partner[];
   inquiries: InboundInquiry[];
+  sections: SectionItem[];
+  editMode: boolean;
+
+  // Edit Mode toggle
+  setEditMode: (enabled: boolean) => void;
+
+  // Section Builder actions
+  updateSection: (id: string, updates: Partial<SectionItem>) => void;
+  toggleSection: (id: string) => void;
+  moveSection: (id: string, direction: 'up' | 'down') => void;
+  addCustomSection: (section: Omit<SectionItem, 'id' | 'order' | 'type'>) => void;
+  deleteSection: (id: string) => void;
+  resetSections: () => void;
 
   // Update actions
   updateCompany: (updated: CompanyInfo) => void;
@@ -134,16 +150,32 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const [testimonials] = useState<Testimonial[]>(initialTestimonialsData);
   const [partners] = useState<Partner[]>(initialPartnersData);
-
   const [inquiries, setInquiries] = useState<InboundInquiry[]>(() => {
     const saved = localStorage.getItem(INQUIRIES_KEY);
     return saved ? JSON.parse(saved) : initialDefaultInquiries;
+  });
+
+  const [sections, setSections] = useState<SectionItem[]>(() => {
+    const saved = localStorage.getItem(`${STORAGE_KEY}_sections`);
+    return saved ? JSON.parse(saved) : initialSectionsData;
+  });
+
+  const [editMode, setEditMode] = useState<boolean>(() => {
+    return localStorage.getItem('techboloy_edit_mode') === 'true';
   });
 
   // Save to localStorage when state changes
   useEffect(() => {
     localStorage.setItem(`${STORAGE_KEY}_company`, JSON.stringify(company));
   }, [company]);
+
+  useEffect(() => {
+    localStorage.setItem(`${STORAGE_KEY}_sections`, JSON.stringify(sections));
+  }, [sections]);
+
+  useEffect(() => {
+    localStorage.setItem('techboloy_edit_mode', editMode ? 'true' : 'false');
+  }, [editMode]);
 
   useEffect(() => {
     localStorage.setItem(`${STORAGE_KEY}_team`, JSON.stringify(team));
@@ -243,15 +275,69 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setInquiries(prev => prev.filter(i => i.id !== id));
   };
 
+  // Section Builder Actions
+  const updateSection = (id: string, updates: Partial<SectionItem>) => {
+    setSections(prev => prev.map(s => s.id === id ? { ...s, ...updates } : s));
+  };
+
+  const toggleSection = (id: string) => {
+    setSections(prev => prev.map(s => s.id === id ? { ...s, enabled: !s.enabled } : s));
+  };
+
+  const moveSection = (id: string, direction: 'up' | 'down') => {
+    setSections(prev => {
+      const sorted = [...prev].sort((a, b) => a.order - b.order);
+      const index = sorted.findIndex(s => s.id === id);
+      if (index === -1) return prev;
+      if (direction === 'up' && index === 0) return prev;
+      if (direction === 'down' && index === sorted.length - 1) return prev;
+
+      const targetIndex = direction === 'up' ? index - 1 : index + 1;
+      const current = sorted[index];
+      const target = sorted[targetIndex];
+
+      const tempOrder = current.order;
+      current.order = target.order;
+      target.order = tempOrder;
+
+      return [...sorted];
+    });
+  };
+
+  const addCustomSection = (newSec: Omit<SectionItem, 'id' | 'order' | 'type'>) => {
+    setSections(prev => {
+      const maxOrder = prev.reduce((max, s) => Math.max(max, s.order), 0);
+      const customItem: SectionItem = {
+        ...newSec,
+        id: `custom-${Date.now()}`,
+        type: 'custom',
+        enabled: true,
+        order: maxOrder + 1,
+      };
+      return [...prev, customItem];
+    });
+  };
+
+  const deleteSection = (id: string) => {
+    setSections(prev => prev.filter(s => s.id !== id));
+  };
+
+  const resetSections = () => {
+    localStorage.removeItem(`${STORAGE_KEY}_sections`);
+    setSections(initialSectionsData);
+  };
+
   // Global Utilities
   const resetToDefaults = () => {
     localStorage.removeItem(`${STORAGE_KEY}_company`);
+    localStorage.removeItem(`${STORAGE_KEY}_sections`);
     localStorage.removeItem(`${STORAGE_KEY}_team`);
     localStorage.removeItem(`${STORAGE_KEY}_portfolio`);
     localStorage.removeItem(`${STORAGE_KEY}_insights`);
     localStorage.removeItem(INQUIRIES_KEY);
 
     setCompany(initialCompanyData);
+    setSections(initialSectionsData);
     setTeam(initialTeamMembers);
     setPortfolio(initialPortfolioData);
     setInsights(initialInsightsData);
@@ -261,6 +347,7 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const exportDataJson = () => {
     const fullData = {
       company,
+      sections,
       team,
       portfolio,
       insights,
@@ -289,6 +376,15 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         testimonials,
         partners,
         inquiries,
+        sections,
+        editMode,
+        setEditMode,
+        updateSection,
+        toggleSection,
+        moveSection,
+        addCustomSection,
+        deleteSection,
+        resetSections,
         updateCompany,
         updateCompanyStat,
         addTeamMember,

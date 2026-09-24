@@ -2,8 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Award, Zap, Users, Code } from 'lucide-react';
 import { SectionHeader } from '../common/SectionHeader';
+import { SectionItem } from '../../context/CMSContext';
 
-export const AboutShort: React.FC = () => {
+interface AboutShortProps {
+  section?: SectionItem;
+}
+
+export const AboutShort: React.FC<AboutShortProps> = ({ section }) => {
+  const imageSrc = section?.imageUrl || "/assets/award-photo.jpg";
+  const badgeText = section?.badge || "About Techboloy";
+  const titleText = section?.title || "Built to Turn Technology Into Growth.";
+  const highlight = section?.highlightWord || "Growth.";
+  const descText = section?.subtitle || section?.description || "Techboloy is a technology and digital solutions company helping businesses and individuals turn ideas into practical digital experiences. From software and websites to digital marketing, ERP solutions, product development and professional technology training, we bring strategy, creativity and technology together.";
+  const ctaLabel = section?.ctaText || "More About Techboloy";
+  const ctaUrl = section?.ctaLink || "/about";
+
   return (
     <section className="py-24 sm:py-32 bg-white dark:bg-slate-950 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -16,8 +29,8 @@ export const AboutShort: React.FC = () => {
               {/* Main Visual: Team & Award Showcase */}
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-100 dark:border-slate-800 group">
                 <img 
-                  src="/assets/award-photo.jpg" 
-                  alt="Techboloy Team Receiving Recognition Award" 
+                  src={imageSrc} 
+                  alt={section?.imageAlt || "Techboloy Team & Innovation"} 
                   className="w-full h-[420px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
                   onError={(e) => {
                     e.currentTarget.src = "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&auto=format&fit=crop&q=80";
@@ -57,14 +70,14 @@ export const AboutShort: React.FC = () => {
           {/* Right Column: Narrative & Values (Span 6) */}
           <div className="lg:col-span-6 space-y-6 text-left">
             <SectionHeader
-              badge="About Techboloy"
-              title="Built to Turn Technology Into Growth."
-              highlightWord="Growth."
+              badge={badgeText}
+              title={titleText}
+              highlightWord={highlight}
               align="left"
             />
 
             <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed -mt-8">
-              Techboloy is a technology and digital solutions company helping businesses and individuals turn ideas into practical digital experiences. From software and websites to digital marketing, ERP solutions, product development and professional technology training, we bring strategy, creativity and technology together.
+              {descText}
             </p>
 
             {/* Core Capability Pillars */}
@@ -105,10 +118,10 @@ export const AboutShort: React.FC = () => {
             {/* CTA Link */}
             <div className="pt-4">
               <Link
-                to="/about"
+                to={ctaUrl}
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-white bg-slate-900 hover:bg-slate-800 dark:bg-brand-purple dark:hover:bg-brand-violet shadow-sm transition-all group"
               >
-                <span>More About Techboloy</span>
+                <span>{ctaLabel}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>

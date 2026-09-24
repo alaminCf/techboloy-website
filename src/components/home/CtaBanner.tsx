@@ -2,8 +2,22 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, MessageSquare, PhoneCall, Sparkles } from 'lucide-react';
 import { companyData } from '../../data/company';
+import { SectionItem } from '../../context/CMSContext';
 
-export const CtaBanner: React.FC = () => {
+interface CtaBannerProps {
+  section?: SectionItem;
+}
+
+export const CtaBanner: React.FC<CtaBannerProps> = ({ section }) => {
+  const badgeText = section?.badge || "Let's Create Tomorrow Together";
+  const titleText = section?.title || "Have an Idea? Let's Build It.";
+  const highlight = section?.highlightWord || "Let's Build It.";
+  const subtitleText = section?.subtitle || "Tell us what you're trying to build, improve or grow. Our team will help you find the right technology path.";
+  const ctaLabel = section?.ctaText || "Start a Project";
+  const ctaUrl = section?.ctaLink || "/contact";
+  const secondaryLabel = section?.secondaryCtaText || "Talk to Us via WhatsApp";
+  const secondaryUrl = section?.secondaryCtaLink || companyData.social.whatsapp;
+
   return (
     <section className="py-24 sm:py-32 bg-slate-950 text-white relative overflow-hidden">
       {/* Abstract Background Lighting */}
@@ -15,37 +29,45 @@ export const CtaBanner: React.FC = () => {
         {/* Pill Tag */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide border border-brand-purple/40 bg-brand-purple/10 text-purple-300">
           <Sparkles className="w-3.5 h-3.5 text-brand-magenta" />
-          <span>Let's Create Tomorrow Together</span>
+          <span>{badgeText}</span>
         </div>
 
         {/* Main Headline */}
         <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight font-display">
-          Have an Idea? <span className="text-gradient-purple">Let's Build It.</span>
+          {titleText.includes(highlight) ? (
+            <>
+              <span>{titleText.split(highlight)[0]}</span>
+              <span className="text-gradient-purple">{highlight}</span>
+              <span>{titleText.split(highlight)[1]}</span>
+            </>
+          ) : (
+            <span>{titleText}</span>
+          )}
         </h2>
 
         {/* Subtitle */}
         <p className="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
-          Tell us what you're trying to build, improve or grow. Our team will help you find the right technology path.
+          {subtitleText}
         </p>
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
           <Link
-            to="/contact"
+            to={ctaUrl}
             className="w-full sm:w-auto px-9 py-4 rounded-xl text-base font-bold text-white bg-brand-gradient hover:shadow-glow-md hover:scale-[1.02] active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 group"
           >
-            <span>Start a Project</span>
+            <span>{ctaLabel}</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
 
           <a
-            href={companyData.social.whatsapp}
+            href={secondaryUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto px-9 py-4 rounded-xl text-base font-semibold text-emerald-400 hover:text-white bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-800/80 hover:border-emerald-600 transition-all duration-200 flex items-center justify-center gap-2.5"
           >
             <MessageSquare className="w-4 h-4 text-emerald-400" />
-            <span>Talk to Us via WhatsApp</span>
+            <span>{secondaryLabel}</span>
           </a>
         </div>
 

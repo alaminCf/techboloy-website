@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { SEOHead } from '../../components/common/SEOHead';
 import { AdminLayout, AdminTab } from '../../components/admin/AdminLayout';
 import { OverviewTab } from '../../components/admin/OverviewTab';
+import { SectionsManagerTab } from '../../components/admin/SectionsManagerTab';
 import { CompanyManagerTab } from '../../components/admin/CompanyManagerTab';
 import { TeamManagerTab } from '../../components/admin/TeamManagerTab';
 import { PortfolioManagerTab } from '../../components/admin/PortfolioManagerTab';
@@ -29,6 +30,7 @@ export const AdminDashboardPage: React.FC = () => {
 
       <AdminLayout activeTab={activeTab} setActiveTab={setActiveTab}>
         {activeTab === 'overview' && <OverviewTab setActiveTab={setActiveTab} />}
+        {activeTab === 'sections' && <SectionsManagerTab />}
         {activeTab === 'company' && <CompanyManagerTab />}
         {activeTab === 'team' && <TeamManagerTab />}
         {activeTab === 'portfolio' && <PortfolioManagerTab />}

@@ -9,7 +9,8 @@ import {
   ArrowRight,
   PlusCircle,
   Clock,
-  CheckCircle2
+  CheckCircle2,
+  Layers
 } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
 import { AdminTab } from './AdminLayout';
@@ -117,6 +118,17 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ setActiveTab }) => {
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button
+              onClick={() => setActiveTab('sections')}
+              className="p-4 rounded-xl bg-brand-purple/10 border border-brand-purple/30 hover:border-brand-purple text-left transition-all hover:bg-brand-purple/20 sm:col-span-2"
+            >
+              <div className="text-xs font-bold text-white flex items-center gap-1.5">
+                <Layers className="w-3.5 h-3.5 text-brand-magenta" />
+                <span>Page & Section Builder</span>
+              </div>
+              <div className="text-[11px] text-slate-300 mt-0.5">Customize homepage sections, change images, reorder blocks, or add new sections</div>
+            </button>
+
             <button
               onClick={() => setActiveTab('company')}
               className="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-brand-purple/40 text-left transition-all hover:bg-slate-800/40"

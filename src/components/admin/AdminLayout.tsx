@@ -16,12 +16,14 @@ import {
   Shield,
   Menu,
   X,
-  Sparkles
+  Sparkles,
+  Layout
 } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
 
 export type AdminTab = 
   | 'overview' 
+  | 'sections'
   | 'company' 
   | 'team' 
   | 'portfolio' 
@@ -54,6 +56,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 
   const navItems = [
     { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+    { id: 'sections', label: 'Page & Section Builder', icon: Layout },
     { id: 'company', label: 'Company & Stats', icon: Building2 },
     { id: 'team', label: 'Team Members', icon: Users },
     { id: 'portfolio', label: 'Portfolio & Case Studies', icon: Briefcase },

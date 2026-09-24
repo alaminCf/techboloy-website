@@ -12,7 +12,23 @@ import {
   Code2
 } from 'lucide-react';
 
-export const Hero: React.FC = () => {
+import { SectionItem } from '../../context/CMSContext';
+
+interface HeroProps {
+  section?: SectionItem;
+}
+
+export const Hero: React.FC<HeroProps> = ({ section }) => {
+  const badgeText = section?.badge || "Next-Generation Digital Transformation & Venture Studio";
+  const titleText = section?.title || "Technology That Moves Your Business Forward.";
+  const highlight = section?.highlightWord || "Business Forward.";
+  const subtitleText = section?.subtitle || "We build digital products, custom software solutions and growth systems that help businesses innovate, scale and succeed.";
+  const ctaLabel = section?.ctaText || "Start a Project";
+  const ctaUrl = section?.ctaLink || "/contact";
+  const secondaryLabel = section?.secondaryCtaText || "Explore Our Services";
+  const secondaryUrl = section?.secondaryCtaLink || "/services";
+  const watermarkImg = section?.imageUrl || "/assets/tb-icon.png";
+
   return (
     <section className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden bg-slate-950 text-white">
       {/* Abstract Animated Tech Background */}
@@ -25,7 +41,7 @@ export const Hero: React.FC = () => {
 
       {/* Subtle fingerprint circuit watermark */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-5 pointer-events-none select-none">
-        <img src="/assets/tb-icon.png" alt="" className="w-[600px] h-[600px] object-contain" />
+        <img src={watermarkImg} alt="" className="w-[600px] h-[600px] object-contain" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
@@ -40,35 +56,42 @@ export const Hero: React.FC = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-magenta opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-magenta" />
               </span>
-              <span>Next-Generation Digital Transformation & Venture Studio</span>
+              <span>{badgeText}</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-[1.08] font-display">
-              <span className="text-white">Technology</span> That Moves Your{' '}
-              <span className="text-gradient-purple">Business Forward.</span>
+              {titleText.includes(highlight) ? (
+                <>
+                  <span className="text-white">{titleText.split(highlight)[0]}</span>
+                  <span className="text-gradient-purple">{highlight}</span>
+                  <span className="text-white">{titleText.split(highlight)[1]}</span>
+                </>
+              ) : (
+                <span className="text-white">{titleText}</span>
+              )}
             </h1>
 
             {/* Supporting Line */}
             <p className="text-lg sm:text-xl text-slate-300 font-normal leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              We build <span className="text-white font-medium">digital products</span>, custom software solutions and <span className="text-white font-medium">growth systems</span> that help businesses innovate, scale and succeed.
+              {subtitleText}
             </p>
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
               <Link
-                to="/contact"
+                to={ctaUrl}
                 className="w-full sm:w-auto px-8 py-4 rounded-xl text-base font-bold text-white bg-brand-gradient hover:shadow-glow-md hover:scale-[1.02] active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 group"
               >
-                <span>Start a Project</span>
+                <span>{ctaLabel}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
 
               <Link
-                to="/services"
+                to={secondaryUrl}
                 className="w-full sm:w-auto px-8 py-4 rounded-xl text-base font-semibold text-slate-200 hover:text-white bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-brand-purple/60 backdrop-blur-md transition-all duration-200 flex items-center justify-center"
               >
-                Explore Our Services
+                {secondaryLabel}
               </Link>
             </div>
 

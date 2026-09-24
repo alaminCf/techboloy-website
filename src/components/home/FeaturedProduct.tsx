@@ -13,10 +13,20 @@ import {
   FileSpreadsheet
 } from 'lucide-react';
 import { productsData } from '../../data/products';
+import { SectionItem } from '../../context/CMSContext';
 
-export const FeaturedProduct: React.FC = () => {
+interface FeaturedProductProps {
+  section?: SectionItem;
+}
+
+export const FeaturedProduct: React.FC<FeaturedProductProps> = ({ section }) => {
   const product = productsData[0]; // EstatePilot
   const [activeTab, setActiveTab] = useState<'overview' | 'leads' | 'units'>('overview');
+
+  const badgeText = section?.badge || "PropTech SaaS Showcase";
+  const titleText = section?.title || "From Ideas to Products.";
+  const highlight = section?.highlightWord || "Products.";
+  const subtitleText = section?.subtitle || "We don't just build for others; we incubate market-leading software products that solve critical industry challenges.";
 
   return (
     <section className="py-24 sm:py-32 bg-slate-950 text-white relative overflow-hidden">
@@ -31,13 +41,21 @@ export const FeaturedProduct: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide border border-brand-purple/40 bg-brand-purple/10 text-purple-300 mb-4">
             <span className="w-2 h-2 rounded-full bg-brand-magenta animate-pulse" />
-            PropTech SaaS Showcase
+            {badgeText}
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight font-display">
-            From Ideas to <span className="text-gradient-purple">Products.</span>
+            {titleText.includes(highlight) ? (
+              <>
+                <span>{titleText.split(highlight)[0]}</span>
+                <span className="text-gradient-purple">{highlight}</span>
+                <span>{titleText.split(highlight)[1]}</span>
+              </>
+            ) : (
+              <span>{titleText}</span>
+            )}
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-400">
-            We don't just build for others; we incubate market-leading software products that solve critical industry challenges.
+            {subtitleText}
           </p>
         </div>
 
