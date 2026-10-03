@@ -64,17 +64,17 @@ export const EstatePilotPage: React.FC = () => {
         </div>
 
         {/* Hero Section */}
-        <section className="py-12 bg-slate-950 text-white rounded-3xl mx-4 sm:mx-6 lg:mx-8 max-w-7xl lg:mx-auto p-8 sm:p-16 relative overflow-hidden border border-slate-800">
+        <section className="py-10 sm:py-12 bg-slate-950 text-white rounded-2xl sm:rounded-3xl mx-3 sm:mx-6 lg:mx-8 max-w-7xl lg:mx-auto p-5 sm:p-12 lg:p-16 relative overflow-hidden border border-slate-800">
           <div className="absolute top-0 right-0 w-96 h-96 bg-brand-purple/20 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-magenta/15 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="max-w-3xl space-y-6 relative z-10">
+          <div className="max-w-3xl space-y-5 sm:space-y-6 relative z-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-purple/20 text-purple-300 border border-brand-purple/40">
               <Building2 className="w-3.5 h-3.5 text-brand-magenta" />
               <span>Real Estate Operating System</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight font-display">
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight font-display">
               ESTATE<span className="text-gradient-purple">PILOT</span>
             </h1>
 
@@ -127,11 +127,11 @@ export const EstatePilotPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {product.modules.map((mod, idx) => (
               <div
                 key={mod.title}
-                className="p-8 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-brand-purple/40 transition-all flex flex-col justify-between"
+                className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:border-brand-purple/40 transition-all flex flex-col justify-between"
               >
                 <div>
                   <span className="text-xs font-bold uppercase tracking-widest text-brand-purple mb-2 block">
@@ -161,7 +161,7 @@ export const EstatePilotPage: React.FC = () => {
         {/* Demo Request Form Section */}
         <section id="demo-form" className="py-16 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="p-8 sm:p-12 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl">
+            <div className="p-5 sm:p-10 lg:p-12 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl">
               
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-bold text-slate-900 dark:text-white font-display">

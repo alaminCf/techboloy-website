@@ -44,7 +44,7 @@ const AnimatedCounter: React.FC<CounterProps> = ({ end, suffix }) => {
   }, [end, hasAnimated]);
 
   return (
-    <div ref={elementRef} className="text-4xl sm:text-5xl lg:text-6xl font-black font-display tracking-tight text-slate-900 dark:text-white">
+    <div ref={elementRef} className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-black font-display tracking-tight text-slate-900 dark:text-white">
       <span className="text-gradient-purple">{count}</span>
       <span className="text-brand-magenta">{suffix}</span>
     </div>
@@ -56,18 +56,18 @@ export const QuickStats: React.FC = () => {
 
   return (
     <section className="relative -mt-8 z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="rounded-3xl bg-white dark:bg-slate-900 shadow-xl border border-slate-100 dark:border-slate-800 p-8 sm:p-10 backdrop-blur-xl">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 divide-y lg:divide-y-0 lg:divide-x divide-slate-100 dark:divide-slate-800">
-          {company.stats.map((stat, idx) => (
+      <div className="rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 shadow-xl border border-slate-100 dark:border-slate-800 p-5 sm:p-8 lg:p-10 backdrop-blur-xl">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 lg:gap-6 lg:divide-x divide-slate-100 dark:divide-slate-800">
+          {company.stats.map((stat) => (
             <div 
               key={stat.id} 
-              className={`text-center space-y-2 ${idx > 1 ? 'pt-6 lg:pt-0' : ''} ${idx === 1 ? 'max-lg:pt-0' : ''} px-2 sm:px-4`}
+              className="text-center space-y-1.5 sm:space-y-2 px-1 sm:px-4"
             >
               <AnimatedCounter end={stat.value} suffix={stat.suffix} />
-              <div className="text-base sm:text-lg font-bold text-slate-800 dark:text-slate-200">
+              <div className="text-xs sm:text-base lg:text-lg font-bold text-slate-800 dark:text-slate-200">
                 {stat.label}
               </div>
-              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-[220px] mx-auto hidden sm:block">
+              <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 max-w-[220px] mx-auto hidden sm:block">
                 {stat.description}
               </p>
             </div>

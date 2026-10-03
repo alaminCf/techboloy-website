@@ -33,7 +33,7 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ section }) => {
         </div>
 
         {/* Main Headline */}
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight font-display">
+        <h2 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight font-display">
           {titleText.includes(highlight) ? (
             <>
               <span>{titleText.split(highlight)[0]}</span>

@@ -62,7 +62,7 @@ export const WhyTechboloy: React.FC = () => {
             return (
               <div
                 key={pillar.number}
-                className={`relative p-8 rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-brand-purple/50 shadow-sm hover:shadow-card-elevated hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group ${
+                className={`relative p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-brand-purple/50 shadow-sm hover:shadow-card-elevated hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group ${
                   idx === 4 ? 'md:col-span-2 lg:col-span-1' : ''
                 }`}
               >

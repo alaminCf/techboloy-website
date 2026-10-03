@@ -32,15 +32,15 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   };
 
   return (
-    <div className={`max-w-3xl mb-12 sm:mb-16 ${align === 'center' ? 'mx-auto text-center' : 'text-left'}`}>
+    <div className={`max-w-3xl mb-8 sm:mb-14 ${align === 'center' ? 'mx-auto text-center' : 'text-left'}`}>
       {badge && (
-        <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full text-xs font-semibold tracking-wide uppercase border border-brand-purple/20 bg-brand-purple/5 text-brand-purple">
+        <div className="inline-flex items-center gap-2 px-3 py-1 mb-3 sm:mb-4 rounded-full text-xs font-semibold tracking-wide uppercase border border-brand-purple/20 bg-brand-purple/5 text-brand-purple">
           <span className="w-1.5 h-1.5 rounded-full bg-brand-magenta animate-pulse" />
           {badge}
         </div>
       )}
       <h2
-        className={`text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight ${
+        className={`text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight ${
           darkTheme ? 'text-white' : 'text-slate-900'
         }`}
       >
@@ -48,7 +48,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
       </h2>
       {subtitle && (
         <p
-          className={`mt-4 text-base sm:text-lg leading-relaxed ${
+          className={`mt-3 sm:mt-4 text-sm sm:text-base md:text-lg leading-relaxed ${
             darkTheme ? 'text-slate-400' : 'text-slate-600'
           }`}
         >

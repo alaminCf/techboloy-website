@@ -22,10 +22,10 @@ export const TeamSection: React.FC = () => {
         />
 
         {/* Tab Switcher: Leadership vs Core Engineering */}
-        <div className="flex items-center justify-center gap-2 mb-14">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10 sm:mb-14">
           <button
             onClick={() => setActiveTab('leadership')}
-            className={`px-6 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all duration-200 ${
+            className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs font-bold tracking-wide transition-all duration-200 ${
               activeTab === 'leadership'
                 ? 'bg-slate-900 text-white dark:bg-brand-purple shadow-sm'
                 : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -35,7 +35,7 @@ export const TeamSection: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab('core')}
-            className={`px-6 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all duration-200 ${
+            className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs font-bold tracking-wide transition-all duration-200 ${
               activeTab === 'core'
                 ? 'bg-slate-900 text-white dark:bg-brand-purple shadow-sm'
                 : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'

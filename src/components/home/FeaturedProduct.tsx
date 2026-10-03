@@ -60,7 +60,7 @@ export const FeaturedProduct: React.FC<FeaturedProductProps> = ({ section }) => 
         </div>
 
         {/* Product Spotlight Card */}
-        <div className="rounded-3xl bg-slate-900/80 border border-slate-800 p-8 sm:p-12 lg:p-14 shadow-2xl backdrop-blur-xl">
+        <div className="rounded-2xl sm:rounded-3xl bg-slate-900/80 border border-slate-800 p-5 sm:p-10 lg:p-14 shadow-2xl backdrop-blur-xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             {/* Left Column: Product Info & Chips (Span 6) */}
@@ -136,14 +136,14 @@ export const FeaturedProduct: React.FC<FeaturedProductProps> = ({ section }) => 
 
             {/* Right Column: Modern Interactive SaaS Dashboard Mockup (Span 6) */}
             <div className="lg:col-span-6">
-              <div className="rounded-2xl bg-slate-950 border border-slate-800 shadow-2xl p-5 sm:p-6 space-y-5">
+              <div className="rounded-2xl bg-slate-950 border border-slate-800 shadow-2xl p-3.5 sm:p-6 space-y-4 sm:space-y-5">
                 
                 {/* Mockup Tab Controller */}
-                <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                  <div className="flex items-center gap-2">
+                <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2.5 border-b border-slate-800 pb-3 sm:pb-4">
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                     <button
                       onClick={() => setActiveTab('overview')}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                      className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold transition-colors ${
                         activeTab === 'overview' ? 'bg-brand-purple text-white' : 'text-slate-400 hover:text-white'
                       }`}
                     >
@@ -151,7 +151,7 @@ export const FeaturedProduct: React.FC<FeaturedProductProps> = ({ section }) => 
                     </button>
                     <button
                       onClick={() => setActiveTab('leads')}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                      className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold transition-colors ${
                         activeTab === 'leads' ? 'bg-brand-purple text-white' : 'text-slate-400 hover:text-white'
                       }`}
                     >
@@ -159,14 +159,14 @@ export const FeaturedProduct: React.FC<FeaturedProductProps> = ({ section }) => 
                     </button>
                     <button
                       onClick={() => setActiveTab('units')}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                      className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold transition-colors ${
                         activeTab === 'units' ? 'bg-brand-purple text-white' : 'text-slate-400 hover:text-white'
                       }`}
                     >
                       Inventory Map
                     </button>
                   </div>
-                  <div className="text-[11px] font-mono text-emerald-400 flex items-center gap-1.5">
+                  <div className="text-[10px] sm:text-[11px] font-mono text-emerald-400 flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                     Live Cloud Sync
                   </div>
@@ -175,7 +175,7 @@ export const FeaturedProduct: React.FC<FeaturedProductProps> = ({ section }) => 
                 {/* Tab 1: Overview Mockup */}
                 {activeTab === 'overview' && (
                   <div className="space-y-4 animate-in fade-in duration-200">
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
                       <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
                         <div className="text-[10px] text-slate-400">Total Units</div>
                         <div className="text-lg font-bold text-white mt-1">248 Units</div>

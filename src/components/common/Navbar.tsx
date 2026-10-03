@@ -92,14 +92,14 @@ export const Navbar: React.FC = () => {
               <img 
                 src={activeLogo} 
                 alt={company.name || "Techboloy"} 
-                className="h-10 sm:h-11 w-auto max-w-[220px] sm:max-w-[260px] object-contain group-hover:scale-105 transition-transform"
+                className="h-8 xs:h-9 sm:h-11 w-auto max-w-[130px] xs:max-w-[170px] sm:max-w-[260px] object-contain group-hover:scale-105 transition-transform"
                 onError={(e) => {
                   e.currentTarget.src = getAssetUrl(isDarkHeader ? '/assets/tb-logo-dark.png' : '/assets/tb-logo-light.png');
                 }}
               />
             ) : (
               <>
-                <div className="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shadow-glow-sm group-hover:scale-105 transition-transform shrink-0">
+                <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shadow-glow-sm group-hover:scale-105 transition-transform shrink-0">
                   <div className={`w-full h-full rounded-[10px] flex items-center justify-center overflow-hidden p-1 transition-colors ${
                     isDarkHeader ? 'bg-slate-950' : 'bg-white'
                   }`}>
@@ -114,7 +114,7 @@ export const Navbar: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex flex-col">
-                  <span className={`text-xl sm:text-2xl font-black tracking-tight font-display leading-tight transition-colors ${
+                  <span className={`text-base xs:text-lg sm:text-2xl font-black tracking-tight font-display leading-tight transition-colors ${
                     isDarkHeader ? 'text-white' : 'text-slate-900'
                   }`}>
                     {company.name ? (
@@ -322,12 +322,12 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Mobile Menu Trigger */}
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden">
             <button
               type="button"
               onClick={toggleTheme}
               aria-label="Toggle dark/light mode"
-              className={`p-2 rounded-lg border transition-all ${
+              className={`p-1.5 sm:p-2 rounded-lg border transition-all ${
                 isDarkHeader
                   ? 'border-slate-800 bg-slate-900 text-amber-400'
                   : 'border-slate-200 bg-slate-100 text-slate-700'
@@ -340,13 +340,13 @@ export const Navbar: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Chat on WhatsApp"
-              className="p-2 rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400"
+              className="p-1.5 sm:p-2 rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400"
             >
               <MessageSquare className="w-4 h-4" />
             </a>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="p-1.5 sm:p-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -358,7 +358,7 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[72px] bottom-0 bg-white/95 dark:bg-brand-navy/95 backdrop-blur-xl border-t border-slate-100 dark:border-slate-800 overflow-y-auto px-6 py-8 flex flex-col justify-between">
+        <div className={`lg:hidden fixed inset-x-0 ${isScrolled ? 'top-[58px]' : 'top-[68px] sm:top-[76px]'} bottom-0 bg-white/95 dark:bg-brand-navy/95 backdrop-blur-xl border-t border-slate-100 dark:border-slate-800 overflow-y-auto px-5 sm:px-6 py-6 sm:py-8 flex flex-col justify-between z-50`}>
           <div className="space-y-4">
             <Link
               to="/"
@@ -430,7 +430,7 @@ export const Navbar: React.FC = () => {
             </Link>
           </div>
 
-          <div className="pt-8 border-t border-slate-200 dark:border-slate-800 space-y-3">
+          <div className="pt-6 sm:pt-8 pb-10 border-t border-slate-200 dark:border-slate-800 space-y-3">
             <Link
               to="/contact"
               className="w-full py-3.5 rounded-xl text-center font-semibold text-white bg-brand-gradient shadow-glow-sm flex items-center justify-center gap-2"

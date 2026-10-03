@@ -50,17 +50,17 @@ export const AboutShort: React.FC<AboutShortProps> = ({ section }) => {
               </div>
 
               {/* Floating Synergy Card */}
-              <div className="absolute -bottom-8 -right-6 sm:bottom-6 sm:-right-8 p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl backdrop-blur-xl max-w-[260px] space-y-2.5">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-brand-purple/10 text-brand-purple flex items-center justify-center font-bold">
-                    <Zap className="w-5 h-5" />
+              <div className="absolute -bottom-6 right-2 sm:bottom-6 sm:-right-6 md:-right-8 p-3.5 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl backdrop-blur-xl max-w-[220px] sm:max-w-[260px] space-y-2 sm:space-y-2.5">
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-brand-purple/10 text-brand-purple flex items-center justify-center font-bold shrink-0">
+                    <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <div>
-                    <div className="text-xs text-slate-500 dark:text-slate-400">Headquarters</div>
-                    <div className="text-sm font-bold text-slate-900 dark:text-white">ICT Tower, Dhaka</div>
+                    <div className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">Headquarters</div>
+                    <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">ICT Tower, Dhaka</div>
                   </div>
                 </div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-2">
+                <div className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-2">
                   Operating in the heart of Bangladesh's national technology ecosystem.
                 </div>
               </div>

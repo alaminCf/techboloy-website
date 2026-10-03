@@ -68,15 +68,15 @@ export const ProcessTimeline: React.FC = () => {
         {/* Timeline Grid with Progress Line */}
         <div className="relative mt-16">
           {/* Subtle Progress Line for Desktop */}
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-purple opacity-30 -translate-y-8" />
+          <div className="hidden xl:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-purple via-brand-magenta to-brand-purple opacity-30 -translate-y-8" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 relative z-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-6 relative z-10">
             {steps.map((item) => {
               const Icon = item.icon;
               return (
                 <div
                   key={item.step}
-                  className="p-6 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-brand-purple/60 shadow-lg hover:shadow-glow-sm hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group"
+                  className="p-5 sm:p-6 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-brand-purple/60 shadow-lg hover:shadow-glow-sm hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group"
                 >
                   <div>
                     {/* Step Number & Icon */}

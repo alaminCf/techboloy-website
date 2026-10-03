@@ -226,7 +226,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
 
         {/* Mobile Sidebar Overlay */}
         {mobileSidebarOpen && (
-          <div className="lg:hidden fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl p-6 flex flex-col justify-between">
+          <div className="lg:hidden fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl p-6 flex flex-col justify-between overflow-y-auto">
             <div>
               <div className="flex items-center justify-between pb-6 border-b border-slate-800">
                 <span className="font-bold text-white">Techboloy CMS Menu</span>

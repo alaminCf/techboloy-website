@@ -27,21 +27,21 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({ se
             </div>
           )}
           
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight font-display">
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight font-display">
             {section.title}
           </h2>
 
           {section.subtitle && (
-            <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
               {section.subtitle}
             </p>
           )}
 
           {section.ctaText && section.ctaLink && (
-            <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
               <Link
                 to={section.ctaLink}
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-bold text-white bg-brand-gradient hover:shadow-glow-sm transition-all"
+                className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl font-bold text-white bg-brand-gradient hover:shadow-glow-sm transition-all text-sm sm:text-base"
               >
                 <span>{section.ctaText}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -49,7 +49,7 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({ se
               {section.secondaryCtaText && section.secondaryCtaLink && (
                 <Link
                   to={section.secondaryCtaLink}
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-slate-300 hover:text-white bg-slate-900 border border-slate-800 hover:border-brand-purple/50 transition-all"
+                  className="inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl font-semibold text-slate-300 hover:text-white bg-slate-900 border border-slate-800 hover:border-brand-purple/50 transition-all text-sm sm:text-base"
                 >
                   <span>{section.secondaryCtaText}</span>
                 </Link>
@@ -65,14 +65,14 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({ se
   if (layout === 'callout') {
     return (
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-brand-purple/10 via-brand-magenta/5 to-slate-50 dark:to-slate-900/60 border border-brand-purple/20 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="p-5 sm:p-10 lg:p-12 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-brand-purple/10 via-brand-magenta/5 to-slate-50 dark:to-slate-900/60 border border-brand-purple/20 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
           <div className="space-y-4 max-w-2xl text-left">
             {section.badge && (
               <span className="inline-block px-3 py-1 rounded-full text-xs font-bold text-brand-purple bg-brand-purple/10">
                 {section.badge}
               </span>
             )}
-            <h3 className="text-2xl sm:text-3xl font-extrabold font-display text-slate-900 dark:text-white">
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold font-display text-slate-900 dark:text-white">
               {section.title}
             </h3>
             {section.subtitle && (

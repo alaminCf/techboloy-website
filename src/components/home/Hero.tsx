@@ -61,7 +61,7 @@ export const Hero: React.FC<HeroProps> = ({ section }) => {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-[1.08] font-display">
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight leading-[1.1] font-display">
               {titleText.includes(highlight) ? (
                 <>
                   <span className="text-white">{titleText.split(highlight)[0]}</span>
@@ -196,7 +196,7 @@ export const Hero: React.FC<HeroProps> = ({ section }) => {
               </div>
 
               {/* Decorative floating badge outside card */}
-              <div className="hidden sm:flex absolute -bottom-5 -left-6 items-center gap-3 p-3.5 rounded-2xl bg-slate-900 border border-slate-700 shadow-glow-sm backdrop-blur-xl animate-float">
+              <div className="hidden sm:flex absolute -bottom-5 left-0 sm:-left-4 md:-left-6 items-center gap-3 p-3.5 rounded-2xl bg-slate-900 border border-slate-700 shadow-glow-sm backdrop-blur-xl animate-float">
                 <div className="w-9 h-9 rounded-xl bg-brand-gradient flex items-center justify-center text-white font-bold text-sm">
                   TB
                 </div>
