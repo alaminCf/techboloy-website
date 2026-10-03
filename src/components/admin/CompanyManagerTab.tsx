@@ -33,7 +33,7 @@ export const CompanyManagerTab: React.FC = () => {
   const resetToDefaultLogos = () => {
     setFormData(prev => ({
       ...prev,
-      logoType: 'icon-text',
+      logoType: 'image-only',
       logo: '/assets/tb-logo-light.png',
       logoLight: '/assets/tb-logo-light.png',
       logoDark: '/assets/tb-logo-dark.png',
@@ -46,7 +46,7 @@ export const CompanyManagerTab: React.FC = () => {
     e.preventDefault();
     const normalized = {
       ...formData,
-      logo: formData.logoLight || formData.logo || '/assets/tb-logo.jpeg',
+      logo: formData.logoLight || formData.logo || '/assets/tb-logo-light.png',
     };
     updateCompany(normalized);
     setSavedMessage(true);
