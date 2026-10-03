@@ -50,6 +50,11 @@ interface CMSContextType {
   inquiries: InboundInquiry[];
   sections: SectionItem[];
   editMode: boolean;
+  theme: 'light' | 'dark';
+
+  // Theme actions
+  setTheme: (theme: 'light' | 'dark') => void;
+  toggleTheme: () => void;
 
   // Edit Mode toggle
   setEditMode: (enabled: boolean) => void;
@@ -124,15 +129,44 @@ const initialDefaultInquiries: InboundInquiry[] = [
 ];
 
 export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [company, setCompany] = useState<CompanyInfo>(() => {
-    const saved = localStorage.getItem(`${STORAGE_KEY}_company`);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        return { ...initialCompanyData, ...parsed };
-      } catch (e) {
-        return initialCompanyData;
+  const safeSetItem = (key: string, value: string) => {
+    try {
+      localStorage.setItem(key, value);
+    } catch (err) {
+      console.warn(`LocalStorage write skipped or quota exceeded for ${key}`);
+    }
+  };
+
+  const [theme, setThemeState] = useState<'light' | 'dark'>(() => {
+    try {
+      const saved = localStorage.getItem('techboloy_theme');
+      if (saved === 'dark' || saved === 'light') return saved;
+      if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
       }
+    } catch (e) {
+      // Ignore
+    }
+    return 'light';
+  });
+
+  const [company, setCompany] = useState<CompanyInfo>(() => {
+    try {
+      const saved = localStorage.getItem(`${STORAGE_KEY}_company`);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return {
+          ...initialCompanyData,
+          ...parsed,
+          logo: parsed.logo || initialCompanyData.logo,
+          logoLight: parsed.logoLight || parsed.logo || initialCompanyData.logoLight,
+          logoDark: parsed.logoDark || initialCompanyData.logoDark,
+          logoIcon: parsed.logoIcon || initialCompanyData.logoIcon,
+          logoIconDark: parsed.logoIconDark || parsed.logoIcon || initialCompanyData.logoIconDark,
+        };
+      }
+    } catch (e) {
+      return initialCompanyData;
     }
     return initialCompanyData;
   });
@@ -172,33 +206,51 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return localStorage.getItem('techboloy_edit_mode') === 'true';
   });
 
-  // Save to localStorage when state changes
+  // Apply Theme to document HTML element
   useEffect(() => {
-    localStorage.setItem(`${STORAGE_KEY}_company`, JSON.stringify(company));
+    safeSetItem('techboloy_theme', theme);
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
+  const setTheme = (newTheme: 'light' | 'dark') => {
+    setThemeState(newTheme);
+  };
+
+  const toggleTheme = () => {
+    setThemeState(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
+  // Save to localStorage when state changes with safeSetItem
+  useEffect(() => {
+    safeSetItem(`${STORAGE_KEY}_company`, JSON.stringify(company));
   }, [company]);
 
   useEffect(() => {
-    localStorage.setItem(`${STORAGE_KEY}_sections`, JSON.stringify(sections));
+    safeSetItem(`${STORAGE_KEY}_sections`, JSON.stringify(sections));
   }, [sections]);
 
   useEffect(() => {
-    localStorage.setItem('techboloy_edit_mode', editMode ? 'true' : 'false');
+    safeSetItem('techboloy_edit_mode', editMode ? 'true' : 'false');
   }, [editMode]);
 
   useEffect(() => {
-    localStorage.setItem(`${STORAGE_KEY}_team`, JSON.stringify(team));
+    safeSetItem(`${STORAGE_KEY}_team`, JSON.stringify(team));
   }, [team]);
 
   useEffect(() => {
-    localStorage.setItem(`${STORAGE_KEY}_portfolio`, JSON.stringify(portfolio));
+    safeSetItem(`${STORAGE_KEY}_portfolio`, JSON.stringify(portfolio));
   }, [portfolio]);
 
   useEffect(() => {
-    localStorage.setItem(`${STORAGE_KEY}_insights`, JSON.stringify(insights));
+    safeSetItem(`${STORAGE_KEY}_insights`, JSON.stringify(insights));
   }, [insights]);
 
   useEffect(() => {
-    localStorage.setItem(INQUIRIES_KEY, JSON.stringify(inquiries));
+    safeSetItem(INQUIRIES_KEY, JSON.stringify(inquiries));
   }, [inquiries]);
 
   // Company Actions
@@ -386,6 +438,9 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         inquiries,
         sections,
         editMode,
+        theme,
+        setTheme,
+        toggleTheme,
         setEditMode,
         updateSection,
         toggleSection,

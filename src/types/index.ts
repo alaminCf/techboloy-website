@@ -12,9 +12,11 @@ export interface CompanyInfo {
   foundedYear: number;
   phone: string;
   email: string;
-  logo?: string;
-  logoIcon?: string;
-  logoDark?: string;
+  logo?: string; // Fallback / Primary horizontal logo
+  logoLight?: string; // Dedicated horizontal logo for Light mode (white/light backgrounds)
+  logoDark?: string; // Dedicated horizontal logo for Dark mode (dark backgrounds & footer)
+  logoIcon?: string; // Light mode square icon mark
+  logoIconDark?: string; // Dark mode square icon mark
   logoType?: 'icon-text' | 'image-only';
   address: {
     line1: string;

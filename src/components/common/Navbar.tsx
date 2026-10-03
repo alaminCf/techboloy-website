@@ -12,16 +12,28 @@ import {
   TrendingUp,
   Palette,
   Rocket,
-  Cloud
+  Cloud,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
 
 export const Navbar: React.FC = () => {
-  const { company } = useCMS();
+  const { company, theme, toggleTheme } = useCMS();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const location = useLocation();
+
+  const isDarkHeader = theme === 'dark' || (!isScrolled && location.pathname === '/');
+
+  const activeLogo = isDarkHeader 
+    ? (company.logoDark || company.logo || '/assets/tb-white-logo.png')
+    : (company.logoLight || company.logo || '/assets/tb-logo.jpeg');
+
+  const activeIcon = isDarkHeader
+    ? (company.logoIconDark || company.logoIcon || '/assets/tb-icon.png')
+    : (company.logoIcon || '/assets/tb-icon.png');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,6 +54,14 @@ export const Navbar: React.FC = () => {
     setServicesDropdownOpen(false);
   }, [location.pathname]);
 
+  const getNavLinkClass = (isActive: boolean) => {
+    if (isActive) return 'text-brand-purple font-semibold bg-brand-purple/10';
+    if (isDarkHeader) {
+      return 'text-slate-200 hover:text-white hover:bg-slate-800/60';
+    }
+    return 'text-slate-700 hover:text-brand-purple hover:bg-slate-100';
+  };
+
   const serviceSublinks = [
     { title: "Web & App Development", desc: "Websites, PWA & mobile apps", href: "/services/web-app-development", icon: Code2 },
     { title: "ERP & Software Solutions", desc: "Bespoke operations & automation", href: "/services/erp-software", icon: Layers },
@@ -55,7 +75,7 @@ export const Navbar: React.FC = () => {
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'py-3 bg-white/90 dark:bg-brand-navy/90 backdrop-blur-md shadow-sm border-b border-slate-100 dark:border-slate-800' 
+          ? 'py-3 bg-white/95 dark:bg-brand-navy/95 backdrop-blur-md shadow-sm border-b border-slate-100 dark:border-slate-800' 
           : 'py-5 bg-transparent'
       }`}
     >
@@ -64,21 +84,23 @@ export const Navbar: React.FC = () => {
           
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            {company.logoType === 'image-only' && company.logo ? (
+            {company.logoType === 'image-only' && activeLogo ? (
               <img 
-                src={company.logo} 
+                src={activeLogo} 
                 alt={company.name || "Techboloy"} 
                 className="h-9 sm:h-10 w-auto max-w-[200px] object-contain group-hover:scale-105 transition-transform"
                 onError={(e) => {
-                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.src = isDarkHeader ? '/assets/tb-white-logo.png' : '/assets/tb-logo.jpeg';
                 }}
               />
             ) : (
               <>
                 <div className="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shadow-glow-sm group-hover:scale-105 transition-transform shrink-0">
-                  <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden p-1">
+                  <div className={`w-full h-full rounded-[10px] flex items-center justify-center overflow-hidden p-1 transition-colors ${
+                    isDarkHeader ? 'bg-slate-950' : 'bg-white'
+                  }`}>
                     <img 
-                      src={company.logoIcon || "/assets/tb-icon.png"} 
+                      src={activeIcon} 
                       alt={company.name || "Techboloy"} 
                       className="w-full h-full object-contain"
                       onError={(e) => {
@@ -88,7 +110,9 @@ export const Navbar: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white font-display leading-tight">
+                  <span className={`text-xl sm:text-2xl font-black tracking-tight font-display leading-tight transition-colors ${
+                    isDarkHeader ? 'text-white' : 'text-slate-900'
+                  }`}>
                     {company.name ? (
                       company.name.toLowerCase() === 'techboloy' ? (
                         <>TECH<span className="text-gradient-purple">BOLOY</span></>
@@ -111,7 +135,9 @@ export const Navbar: React.FC = () => {
                       <>TECH<span className="text-gradient-purple">BOLOY</span></>
                     )}
                   </span>
-                  <span className="text-[9px] uppercase tracking-widest font-semibold text-slate-500 dark:text-slate-400">
+                  <span className={`text-[9px] uppercase tracking-widest font-semibold transition-colors ${
+                    isDarkHeader ? 'text-slate-400' : 'text-slate-500'
+                  }`}>
                     {company.tagline || 'Growth Partner'}
                   </span>
                 </div>
@@ -253,7 +279,22 @@ export const Navbar: React.FC = () => {
           </nav>
 
           {/* Action CTAs */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-2 xl:gap-3">
+            {/* Theme Toggle Button */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label="Toggle dark/light mode"
+              title={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              className={`p-2.5 rounded-xl border transition-all shadow-sm flex items-center justify-center hover:scale-105 active:scale-95 ${
+                isDarkHeader
+                  ? 'border-slate-800 bg-slate-900/90 text-amber-400 hover:bg-slate-800'
+                  : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200'
+              }`}
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
+
             {/* WhatsApp Quick Action */}
             <a
               href={company.social.whatsapp}
@@ -278,6 +319,18 @@ export const Navbar: React.FC = () => {
 
           {/* Mobile Menu Trigger */}
           <div className="flex items-center gap-2 lg:hidden">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label="Toggle dark/light mode"
+              className={`p-2 rounded-lg border transition-all ${
+                isDarkHeader
+                  ? 'border-slate-800 bg-slate-900 text-amber-400'
+                  : 'border-slate-200 bg-slate-100 text-slate-700'
+              }`}
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
             <a
               href={company.social.whatsapp}
               target="_blank"

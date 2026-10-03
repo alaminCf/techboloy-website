@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Upload, Link as LinkIcon, X, Image as ImageIcon, Check } from 'lucide-react';
+import { Upload, Link as LinkIcon, X, Check, Sun, Moon } from 'lucide-react';
 
 interface ImageUploadFieldProps {
   label: string;
@@ -7,6 +7,8 @@ interface ImageUploadFieldProps {
   onChange: (newValue: string) => void;
   helperText?: string;
   placeholder?: string;
+  presets?: { label: string; url: string }[];
+  previewDarkDefault?: boolean;
 }
 
 export const ImageUploadField: React.FC<ImageUploadFieldProps> = ({
@@ -14,43 +16,116 @@ export const ImageUploadField: React.FC<ImageUploadFieldProps> = ({
   value,
   onChange,
   helperText = "Upload a file from your device or paste an image URL",
-  placeholder = "https://example.com/image.jpg or /assets/..."
+  placeholder = "https://example.com/image.jpg or /assets/...",
+  presets,
+  previewDarkDefault = false
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [activeMode, setActiveMode] = useState<'upload' | 'url'>('upload');
   const [uploadError, setUploadError] = useState<string>('');
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [previewDark, setPreviewDark] = useState<boolean>(previewDarkDefault);
+
+  const defaultPresetAssets = presets || [
+    { label: 'TB Light Logo', url: '/assets/tb-logo.jpeg' },
+    { label: 'TB White Logo', url: '/assets/tb-white-logo.png' },
+    { label: 'TB Icon', url: '/assets/tb-icon.png' },
+    { label: 'Award Photo', url: '/assets/award-photo.jpg' }
+  ];
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUploadError('');
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Check size limit for localStorage (max ~4MB recommended for localStorage)
-    if (file.size > 4 * 1024 * 1024) {
-      setUploadError('Image size exceeds 4MB. Please select a smaller image or use an image URL.');
+    // Reject huge files over 10MB to protect device memory
+    if (file.size > 10 * 1024 * 1024) {
+      setUploadError('Image size exceeds 10MB. Please choose a smaller image.');
       return;
     }
 
+    setIsProcessing(true);
+
+    // If SVG, directly read as DataURL to retain vector precision
+    if (file.type === 'image/svg+xml') {
+      const reader = new FileReader();
+      reader.onload = (uploadEvent) => {
+        setIsProcessing(false);
+        const result = uploadEvent.target?.result as string;
+        if (result) onChange(result);
+      };
+      reader.onerror = () => {
+        setIsProcessing(false);
+        setUploadError('Failed to read SVG file.');
+      };
+      reader.readAsDataURL(file);
+      return;
+    }
+
+    // For raster images (PNG, JPG, WebP), compress client-side via canvas
+    // to keep localStorage usage well within browser limits (~30KB - 80KB)
     const reader = new FileReader();
     reader.onload = (uploadEvent) => {
-      const result = uploadEvent.target?.result as string;
-      if (result) {
-        onChange(result);
+      const rawDataUrl = uploadEvent.target?.result as string;
+      if (!rawDataUrl) {
+        setIsProcessing(false);
+        return;
       }
+
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          let { width, height } = img;
+          const maxDimension = 640; // Generous for crisp retina displays
+
+          if (width > maxDimension || height > maxDimension) {
+            if (width > height) {
+              height = Math.round((height * maxDimension) / width);
+              width = maxDimension;
+            } else {
+              width = Math.round((width * maxDimension) / height);
+              height = maxDimension;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            setIsProcessing(false);
+            onChange(rawDataUrl);
+            return;
+          }
+
+          ctx.clearRect(0, 0, width, height);
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Preserve transparency with PNG encoding
+          const optimizedDataUrl = canvas.toDataURL('image/png', 0.9);
+          setIsProcessing(false);
+          onChange(optimizedDataUrl);
+        } catch (err) {
+          setIsProcessing(false);
+          onChange(rawDataUrl);
+        }
+      };
+
+      img.onerror = () => {
+        setIsProcessing(false);
+        setUploadError('Failed to decode image.');
+      };
+
+      img.src = rawDataUrl;
     };
+
     reader.onerror = () => {
-      setUploadError('Failed to read file. Please try again.');
+      setIsProcessing(false);
+      setUploadError('Failed to read file from disk.');
     };
+
     reader.readAsDataURL(file);
   };
-
-  const presetAssets = [
-    { label: 'Award Photo', url: '/assets/award-photo.jpg' },
-    { label: 'TB Fingerprint Icon', url: '/assets/tb-icon.png' },
-    { label: 'TB White Logo', url: '/assets/tb-white-logo.png' },
-    { label: 'Office Team', url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&auto=format&fit=crop&q=80' },
-    { label: 'Tech Code', url: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1000&auto=format&fit=crop&q=80' }
-  ];
 
   return (
     <div className="space-y-2">
@@ -101,10 +176,10 @@ export const ImageUploadField: React.FC<ImageUploadFieldProps> = ({
           >
             <Upload className="w-6 h-6 mx-auto text-slate-400 group-hover:text-brand-purple transition-colors mb-1.5" />
             <div className="text-xs font-semibold text-slate-700 dark:text-slate-200">
-              Click to choose image from your computer
+              {isProcessing ? 'Optimizing & compressing image...' : 'Click to select image from your device'}
             </div>
             <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-              PNG, JPG, WebP, SVG (up to 4MB)
+              PNG, JPG, WebP, SVG (Auto-optimized for instant cloud & storage sync)
             </div>
           </div>
         </div>
@@ -120,7 +195,7 @@ export const ImageUploadField: React.FC<ImageUploadFieldProps> = ({
           {/* Quick presets */}
           <div className="flex flex-wrap items-center gap-1.5 pt-1">
             <span className="text-[11px] text-slate-500">Presets:</span>
-            {presetAssets.map((p) => (
+            {defaultPresetAssets.map((p) => (
               <button
                 key={p.label}
                 type="button"
@@ -144,34 +219,51 @@ export const ImageUploadField: React.FC<ImageUploadFieldProps> = ({
 
       {/* Image Preview */}
       {value && (
-        <div className="relative rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/60 p-2 flex items-center gap-3">
-          <div className="w-14 h-14 rounded-lg overflow-hidden bg-slate-900 flex-shrink-0 flex items-center justify-center border border-slate-200 dark:border-slate-700">
+        <div className="relative rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800/60 p-2.5 flex items-center gap-3">
+          {/* Preview Box with Dark/Light Toggle */}
+          <div 
+            className={`w-16 h-14 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center border border-slate-200 dark:border-slate-700 p-1.5 transition-colors ${
+              previewDark ? 'bg-slate-950' : 'bg-white'
+            }`}
+          >
             <img
               src={value}
               alt="Preview"
-              className="w-full h-full object-cover"
+              className="max-w-full max-h-full object-contain"
               onError={(e) => {
                 e.currentTarget.style.display = 'none';
               }}
             />
           </div>
+
           <div className="flex-grow min-w-0">
             <div className="text-xs font-semibold text-slate-900 dark:text-white truncate">
-              {value.startsWith('data:') ? 'Custom uploaded image (Data URL)' : value}
+              {value.startsWith('data:') ? 'Custom uploaded image (Ready)' : value}
             </div>
             <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1 mt-0.5">
               <Check className="w-3 h-3" />
-              <span>Image active & ready</span>
+              <span>Image active & saved</span>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={() => onChange('')}
-            title="Remove image"
-            className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
+
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={() => setPreviewDark(!previewDark)}
+              title={previewDark ? "View on white background" : "View on dark background"}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+            >
+              {previewDark ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
+            </button>
+            <button
+              type="button"
+              onClick={() => onChange('')}
+              title="Remove image"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       )}
 

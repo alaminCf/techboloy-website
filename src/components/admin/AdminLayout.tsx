@@ -83,18 +83,14 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
             <Link to="/" className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shadow-glow-sm shrink-0">
                 <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden p-1">
-                  {company.logoIcon ? (
-                    <img 
-                      src={company.logoIcon} 
-                      alt={company.name || "TB"} 
-                      className="w-full h-full object-contain"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  ) : (
-                    <span className="font-bold text-white text-xs">TB</span>
-                  )}
+                  <img 
+                    src={company.logoIconDark || company.logoIcon || "/assets/tb-icon.png"} 
+                    alt={company.name || "TB"} 
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      e.currentTarget.src = "/assets/tb-icon.png";
+                    }}
+                  />
                 </div>
               </div>
               <div className="overflow-hidden">

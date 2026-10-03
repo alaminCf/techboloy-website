@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Save, CheckCircle2, RotateCcw, Image as ImageIcon, Eye } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Save, CheckCircle2, RotateCcw, Image as ImageIcon, Eye, Sun, Moon } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
 import { ImageUploadField } from '../common/ImageUploadField';
 
@@ -8,27 +8,48 @@ export const CompanyManagerTab: React.FC = () => {
   const [formData, setFormData] = useState({
     ...company,
     logoType: company.logoType || 'icon-text',
-    logoIcon: company.logoIcon || '/assets/tb-icon.png',
-    logo: company.logo || '/assets/tb-white-logo.png',
+    logo: company.logo || '/assets/tb-logo.jpeg',
+    logoLight: company.logoLight || company.logo || '/assets/tb-logo.jpeg',
     logoDark: company.logoDark || '/assets/tb-white-logo.png',
+    logoIcon: company.logoIcon || '/assets/tb-icon.png',
+    logoIconDark: company.logoIconDark || company.logoIcon || '/assets/tb-icon.png',
   });
   const [savedMessage, setSavedMessage] = useState(false);
+
+  // Sync state whenever CMSContext changes
+  useEffect(() => {
+    setFormData({
+      ...company,
+      logoType: company.logoType || 'icon-text',
+      logo: company.logo || '/assets/tb-logo.jpeg',
+      logoLight: company.logoLight || company.logo || '/assets/tb-logo.jpeg',
+      logoDark: company.logoDark || '/assets/tb-white-logo.png',
+      logoIcon: company.logoIcon || '/assets/tb-icon.png',
+      logoIconDark: company.logoIconDark || company.logoIcon || '/assets/tb-icon.png',
+    });
+  }, [company]);
 
   const resetToDefaultLogos = () => {
     setFormData(prev => ({
       ...prev,
       logoType: 'icon-text',
-      logoIcon: '/assets/tb-icon.png',
-      logo: '/assets/tb-white-logo.png',
+      logo: '/assets/tb-logo.jpeg',
+      logoLight: '/assets/tb-logo.jpeg',
       logoDark: '/assets/tb-white-logo.png',
+      logoIcon: '/assets/tb-icon.png',
+      logoIconDark: '/assets/tb-icon.png',
     }));
   };
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
-    updateCompany(formData);
+    const normalized = {
+      ...formData,
+      logo: formData.logoLight || formData.logo || '/assets/tb-logo.jpeg',
+    };
+    updateCompany(normalized);
     setSavedMessage(true);
-    setTimeout(() => setSavedMessage(false), 3000);
+    setTimeout(() => setSavedMessage(false), 3500);
   };
 
   const handleStatChange = (id: string, value: number) => {
@@ -100,10 +121,10 @@ export const CompanyManagerTab: React.FC = () => {
             <div>
               <h3 className="text-base font-bold text-white flex items-center gap-2">
                 <ImageIcon className="w-5 h-5 text-brand-purple" />
-                <span>2. Website Logo & Brand Identity</span>
+                <span>2. Website Logo & Brand Identity (Dark & Light Mode)</span>
               </h3>
               <p className="text-xs text-slate-400 mt-0.5">
-                Upload your company logo or icon mark. Updates reflect instantly across Navbar, Footer, and Admin header.
+                Upload dedicated logos and icon marks for both Light Mode (white backgrounds) and Dark Mode (dark backgrounds & footer).
               </p>
             </div>
             <button
@@ -170,100 +191,194 @@ export const CompanyManagerTab: React.FC = () => {
             </div>
           </div>
 
-          {/* Logo Upload Fields */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-            {/* Square Brand Icon */}
-            <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800/80 space-y-4">
+          {/* Section A: Light Mode Logo Settings */}
+          <div className="p-6 rounded-2xl bg-slate-950/90 border border-amber-500/30 space-y-5">
+            <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
+              <div className="p-1.5 rounded-lg bg-amber-500/10 text-amber-400">
+                <Sun className="w-4 h-4" />
+              </div>
               <div>
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider">
-                  Brand Icon / Mark (Square)
+                <h4 className="text-sm font-bold text-white">
+                  ☀️ Light Mode Branding (For White / Light backgrounds)
                 </h4>
-                <p className="text-[11px] text-slate-400 mt-0.5">
-                  Square image (1:1 aspect ratio) used for mobile header, navbar icon box & admin panel.
+                <p className="text-[11px] text-slate-400">
+                  Used when viewing the website in Light Mode, or on white header pages.
                 </p>
               </div>
-
-              <ImageUploadField
-                label="Icon Image File or URL"
-                value={formData.logoIcon || ''}
-                onChange={(newIcon) => setFormData({ ...formData, logoIcon: newIcon })}
-                helperText="Upload PNG/SVG/WebP with transparent background, or paste URL"
-                placeholder="/assets/tb-icon.png or https://..."
-              />
             </div>
 
-            {/* Full Horizontal Logo */}
-            <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800/80 space-y-4">
-              <div>
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider">
-                  Full Horizontal Logo (Navbar & Public Pages)
-                </h4>
-                <p className="text-[11px] text-slate-400 mt-0.5">
-                  Horizontal logo used when &quot;Full Logo Image&quot; mode is selected.
-                </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* Full Horizontal Light Logo */}
+              <div className="space-y-2">
+                <ImageUploadField
+                  label="Light Mode Full Logo (Horizontal)"
+                  value={formData.logoLight || ''}
+                  onChange={(newLight) => setFormData({ ...formData, logoLight: newLight, logo: newLight })}
+                  helperText="Recommended: Dark or colored logo with transparent background"
+                  placeholder="/assets/tb-logo.jpeg or https://..."
+                  previewDarkDefault={false}
+                  presets={[
+                    { label: 'TB Light Logo', url: '/assets/tb-logo.jpeg' },
+                    { label: 'TB White Logo', url: '/assets/tb-white-logo.png' }
+                  ]}
+                />
               </div>
 
-              <ImageUploadField
-                label="Full Logo File or URL"
-                value={formData.logo || ''}
-                onChange={(newLogo) => setFormData({ ...formData, logo: newLogo })}
-                helperText="Upload horizontal brand logo with transparent background"
-                placeholder="/assets/tb-white-logo.png or https://..."
-              />
-            </div>
-
-            {/* Dark/Footer Logo */}
-            <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800/80 space-y-4 md:col-span-2">
-              <div>
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider">
-                  Footer Logo (For Dark Background)
-                </h4>
-                <p className="text-[11px] text-slate-400 mt-0.5">
-                  White or light-colored version of your logo for the dark footer (optional - defaults to Primary Logo).
-                </p>
+              {/* Light Mode Icon */}
+              <div className="space-y-2">
+                <ImageUploadField
+                  label="Light Mode Icon Mark (Square 1:1)"
+                  value={formData.logoIcon || ''}
+                  onChange={(newIcon) => setFormData({ ...formData, logoIcon: newIcon })}
+                  helperText="Square icon used in the header and mobile menu"
+                  placeholder="/assets/tb-icon.png or https://..."
+                  previewDarkDefault={false}
+                  presets={[
+                    { label: 'TB Icon', url: '/assets/tb-icon.png' }
+                  ]}
+                />
               </div>
-
-              <ImageUploadField
-                label="Footer Dark-Background Logo"
-                value={formData.logoDark || ''}
-                onChange={(newLogoDark) => setFormData({ ...formData, logoDark: newLogoDark })}
-                helperText="Light or white colored logo for dark slate footer"
-                placeholder="/assets/tb-white-logo.png or https://..."
-              />
             </div>
           </div>
 
-          {/* Live Branding Preview */}
-          <div className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
-                <Eye className="w-3.5 h-3.5 text-brand-purple" />
-                <span>Live Navbar & Footer Appearance Preview</span>
+          {/* Section B: Dark Mode Logo Settings */}
+          <div className="p-6 rounded-2xl bg-slate-950/90 border border-purple-500/30 space-y-5">
+            <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
+              <div className="p-1.5 rounded-lg bg-purple-500/10 text-purple-400">
+                <Moon className="w-4 h-4" />
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-white">
+                  🌙 Dark Mode Branding (For Dark backgrounds, Hero & Footer)
+                </h4>
+                <p className="text-[11px] text-slate-400">
+                  Used on dark backgrounds, transparent Hero section, Dark Theme, and the Footer.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* Full Horizontal Dark Logo */}
+              <div className="space-y-2">
+                <ImageUploadField
+                  label="Dark Mode Full Logo (Horizontal)"
+                  value={formData.logoDark || ''}
+                  onChange={(newDark) => setFormData({ ...formData, logoDark: newDark })}
+                  helperText="Recommended: White or radiant logo with transparent background"
+                  placeholder="/assets/tb-white-logo.png or https://..."
+                  previewDarkDefault={true}
+                  presets={[
+                    { label: 'TB White Logo', url: '/assets/tb-white-logo.png' },
+                    { label: 'TB Light Logo', url: '/assets/tb-logo.jpeg' }
+                  ]}
+                />
+              </div>
+
+              {/* Dark Mode Icon */}
+              <div className="space-y-2">
+                <ImageUploadField
+                  label="Dark Mode Icon Mark (Square 1:1)"
+                  value={formData.logoIconDark || ''}
+                  onChange={(newIconDark) => setFormData({ ...formData, logoIconDark: newIconDark })}
+                  helperText="Square icon for dark theme and admin dashboard"
+                  placeholder="/assets/tb-icon.png or https://..."
+                  previewDarkDefault={true}
+                  presets={[
+                    { label: 'TB Icon', url: '/assets/tb-icon.png' }
+                  ]}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Live Dual-Theme Visual Preview Card */}
+          <div className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
+              <span className="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+                <Eye className="w-4 h-4 text-brand-purple" />
+                <span>Live Dual-Theme Appearance Preview</span>
               </span>
               <span className="text-[10px] uppercase font-bold text-brand-magenta tracking-wider">
-                Active Mode: {formData.logoType === 'image-only' ? 'Full Image' : 'Icon + Text'}
+                Mode: {formData.logoType === 'image-only' ? 'Full Image' : 'Icon + Text'}
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
-              {/* Header Preview */}
-              <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 flex flex-col justify-center">
-                <div className="text-[10px] text-slate-500 mb-2 font-medium">Header / Navbar Style:</div>
-                <div className="flex items-center gap-3 py-2 px-3 rounded-lg bg-slate-950 border border-slate-800/60 w-fit max-w-full overflow-hidden">
-                  {formData.logoType === 'image-only' && formData.logo ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-1">
+              {/* Light Theme Surface Preview */}
+              <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold text-slate-800 flex items-center gap-1">
+                    <Sun className="w-3.5 h-3.5 text-amber-500" />
+                    <span>☀️ Light Theme Header Preview</span>
+                  </span>
+                  <span className="text-[9px] uppercase px-2 py-0.5 rounded font-semibold bg-slate-100 text-slate-600">
+                    White Surface
+                  </span>
+                </div>
+
+                <div className="py-3 px-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center gap-3 w-fit max-w-full overflow-hidden">
+                  {formData.logoType === 'image-only' ? (
                     <img 
-                      src={formData.logo} 
-                      alt="Preview" 
+                      src={formData.logoLight || formData.logo || '/assets/tb-logo.jpeg'} 
+                      alt="Light Preview" 
                       className="h-8 max-h-10 w-auto max-w-[180px] object-contain" 
-                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                      onError={(e) => { e.currentTarget.src = '/assets/tb-logo.jpeg'; }}
                     />
                   ) : (
                     <>
-                      <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shrink-0">
-                        <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden p-1">
+                      <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shrink-0 shadow-sm">
+                        <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center overflow-hidden p-1">
                           <img 
                             src={formData.logoIcon || '/assets/tb-icon.png'} 
-                            alt="Icon" 
+                            alt="Light Icon" 
+                            className="w-full h-full object-contain" 
+                            onError={(e) => { e.currentTarget.src = '/assets/tb-icon.png'; }}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex flex-col overflow-hidden">
+                        <span className="text-base font-black tracking-tight text-slate-900 font-display truncate">
+                          {formData.name || 'Brand Name'}
+                        </span>
+                        <span className="text-[8px] uppercase tracking-wider text-slate-500 truncate">
+                          {formData.tagline || 'Tagline'}
+                        </span>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <div className="text-[10px] text-slate-500">
+                  This is how visitors see your brand on light backgrounds and daytime mode.
+                </div>
+              </div>
+
+              {/* Dark Theme Surface Preview */}
+              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 shadow-md flex flex-col justify-between space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold text-white flex items-center gap-1">
+                    <Moon className="w-3.5 h-3.5 text-purple-400" />
+                    <span>🌙 Dark Theme & Footer Preview</span>
+                  </span>
+                  <span className="text-[9px] uppercase px-2 py-0.5 rounded font-semibold bg-slate-900 text-purple-300 border border-slate-800">
+                    Dark Slate Surface
+                  </span>
+                </div>
+
+                <div className="py-3 px-4 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-3 w-fit max-w-full overflow-hidden">
+                  {formData.logoType === 'image-only' ? (
+                    <img 
+                      src={formData.logoDark || '/assets/tb-white-logo.png'} 
+                      alt="Dark Preview" 
+                      className="h-8 max-h-10 w-auto max-w-[180px] object-contain" 
+                      onError={(e) => { e.currentTarget.src = '/assets/tb-white-logo.png'; }}
+                    />
+                  ) : (
+                    <>
+                      <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shrink-0 shadow-sm">
+                        <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden p-1">
+                          <img 
+                            src={formData.logoIconDark || formData.logoIcon || '/assets/tb-icon.png'} 
+                            alt="Dark Icon" 
                             className="w-full h-full object-contain" 
                             onError={(e) => { e.currentTarget.src = '/assets/tb-icon.png'; }}
                           />
@@ -280,41 +395,8 @@ export const CompanyManagerTab: React.FC = () => {
                     </>
                   )}
                 </div>
-              </div>
-
-              {/* Footer Preview */}
-              <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 flex flex-col justify-center">
-                <div className="text-[10px] text-slate-500 mb-2 font-medium">Footer (Dark) Style:</div>
-                <div className="flex items-center gap-3 py-2 px-3 rounded-lg bg-slate-950 border border-slate-800/60 w-fit max-w-full overflow-hidden">
-                  {formData.logoType === 'image-only' && (formData.logoDark || formData.logo) ? (
-                    <img 
-                      src={formData.logoDark || formData.logo} 
-                      alt="Preview" 
-                      className="h-8 max-h-10 w-auto max-w-[180px] object-contain" 
-                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                    />
-                  ) : (
-                    <>
-                      <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shrink-0">
-                        <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden p-1">
-                          <img 
-                            src={formData.logoIcon || '/assets/tb-icon.png'} 
-                            alt="Icon" 
-                            className="w-full h-full object-contain" 
-                            onError={(e) => { e.currentTarget.src = '/assets/tb-icon.png'; }}
-                          />
-                        </div>
-                      </div>
-                      <div className="flex flex-col overflow-hidden">
-                        <span className="text-base font-black tracking-tight text-white font-display truncate">
-                          {formData.name || 'Brand Name'}
-                        </span>
-                        <span className="text-[8px] uppercase tracking-wider text-slate-400 truncate">
-                          {formData.tagline || 'Tagline'}
-                        </span>
-                      </div>
-                    </>
-                  )}
+                <div className="text-[10px] text-slate-400">
+                  This is how visitors see your brand on dark mode, hero banner, and footer.
                 </div>
               </div>
             </div>

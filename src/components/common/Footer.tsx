@@ -30,13 +30,13 @@ export const Footer: React.FC = () => {
           {/* Column 1: Brand & Headquarters (Span 4) */}
           <div className="lg:col-span-4 space-y-6">
             <Link to="/" className="flex items-center gap-3 group">
-              {company.logoType === 'image-only' && (company.logoDark || company.logo) ? (
+              {company.logoType === 'image-only' ? (
                 <img 
-                  src={company.logoDark || company.logo} 
+                  src={company.logoDark || company.logo || '/assets/tb-white-logo.png'} 
                   alt={company.name || "Techboloy"} 
                   className="h-10 w-auto max-w-[220px] object-contain group-hover:scale-105 transition-transform"
                   onError={(e) => {
-                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.src = '/assets/tb-white-logo.png';
                   }}
                 />
               ) : (
@@ -44,7 +44,7 @@ export const Footer: React.FC = () => {
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shadow-glow-sm group-hover:scale-105 transition-transform shrink-0">
                     <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden p-1">
                       <img 
-                        src={company.logoIcon || "/assets/tb-icon.png"} 
+                        src={company.logoIconDark || company.logoIcon || "/assets/tb-icon.png"} 
                         alt={company.name || "Techboloy"} 
                         className="w-full h-full object-contain"
                         onError={(e) => {
