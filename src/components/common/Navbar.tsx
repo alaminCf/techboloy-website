@@ -28,11 +28,11 @@ export const Navbar: React.FC = () => {
   const isDarkHeader = theme === 'dark' || (!isScrolled && location.pathname === '/');
 
   const activeLogo = isDarkHeader 
-    ? (company.logoDark || company.logo || '/assets/tb-white-logo.png')
-    : (company.logoLight || company.logo || '/assets/tb-logo.jpeg');
+    ? (company.logoDark || company.logo || '/assets/tb-logo-dark.png')
+    : (company.logoLight || company.logo || '/assets/tb-logo-light.png');
 
   const activeIcon = isDarkHeader
-    ? (company.logoIconDark || company.logoIcon || '/assets/tb-icon.png')
+    ? (company.logoIconDark || company.logoIcon || '/assets/tb-icon-dark.png')
     : (company.logoIcon || '/assets/tb-icon.png');
 
   useEffect(() => {
@@ -90,7 +90,7 @@ export const Navbar: React.FC = () => {
                 alt={company.name || "Techboloy"} 
                 className="h-9 sm:h-10 w-auto max-w-[200px] object-contain group-hover:scale-105 transition-transform"
                 onError={(e) => {
-                  e.currentTarget.src = isDarkHeader ? '/assets/tb-white-logo.png' : '/assets/tb-logo.jpeg';
+                  e.currentTarget.src = isDarkHeader ? '/assets/tb-logo-dark.png' : '/assets/tb-logo-light.png';
                 }}
               />
             ) : (

@@ -8,11 +8,11 @@ export const CompanyManagerTab: React.FC = () => {
   const [formData, setFormData] = useState({
     ...company,
     logoType: company.logoType || 'icon-text',
-    logo: company.logo || '/assets/tb-logo.jpeg',
-    logoLight: company.logoLight || company.logo || '/assets/tb-logo.jpeg',
-    logoDark: company.logoDark || '/assets/tb-white-logo.png',
+    logo: company.logo || '/assets/tb-logo-light.png',
+    logoLight: company.logoLight || company.logo || '/assets/tb-logo-light.png',
+    logoDark: company.logoDark || '/assets/tb-logo-dark.png',
     logoIcon: company.logoIcon || '/assets/tb-icon.png',
-    logoIconDark: company.logoIconDark || company.logoIcon || '/assets/tb-icon.png',
+    logoIconDark: company.logoIconDark || company.logoIcon || '/assets/tb-icon-dark.png',
   });
   const [savedMessage, setSavedMessage] = useState(false);
 
@@ -21,11 +21,11 @@ export const CompanyManagerTab: React.FC = () => {
     setFormData({
       ...company,
       logoType: company.logoType || 'icon-text',
-      logo: company.logo || '/assets/tb-logo.jpeg',
-      logoLight: company.logoLight || company.logo || '/assets/tb-logo.jpeg',
-      logoDark: company.logoDark || '/assets/tb-white-logo.png',
+      logo: company.logo || '/assets/tb-logo-light.png',
+      logoLight: company.logoLight || company.logo || '/assets/tb-logo-light.png',
+      logoDark: company.logoDark || '/assets/tb-logo-dark.png',
       logoIcon: company.logoIcon || '/assets/tb-icon.png',
-      logoIconDark: company.logoIconDark || company.logoIcon || '/assets/tb-icon.png',
+      logoIconDark: company.logoIconDark || company.logoIcon || '/assets/tb-icon-dark.png',
     });
   }, [company]);
 
@@ -33,11 +33,11 @@ export const CompanyManagerTab: React.FC = () => {
     setFormData(prev => ({
       ...prev,
       logoType: 'icon-text',
-      logo: '/assets/tb-logo.jpeg',
-      logoLight: '/assets/tb-logo.jpeg',
-      logoDark: '/assets/tb-white-logo.png',
+      logo: '/assets/tb-logo-light.png',
+      logoLight: '/assets/tb-logo-light.png',
+      logoDark: '/assets/tb-logo-dark.png',
       logoIcon: '/assets/tb-icon.png',
-      logoIconDark: '/assets/tb-icon.png',
+      logoIconDark: '/assets/tb-icon-dark.png',
     }));
   };
 
@@ -215,11 +215,12 @@ export const CompanyManagerTab: React.FC = () => {
                   value={formData.logoLight || ''}
                   onChange={(newLight) => setFormData({ ...formData, logoLight: newLight, logo: newLight })}
                   helperText="Recommended: Dark or colored logo with transparent background"
-                  placeholder="/assets/tb-logo.jpeg or https://..."
+                  placeholder="/assets/tb-logo-light.png or https://..."
                   previewDarkDefault={false}
                   presets={[
-                    { label: 'TB Light Logo', url: '/assets/tb-logo.jpeg' },
-                    { label: 'TB White Logo', url: '/assets/tb-white-logo.png' }
+                    { label: 'TB Light Logo (Transparent)', url: '/assets/tb-logo-light.png' },
+                    { label: 'TB Dark Logo (White Text)', url: '/assets/tb-logo-dark.png' },
+                    { label: 'TB Pure White Logo', url: '/assets/tb-logo-white.png' }
                   ]}
                 />
               </div>
@@ -234,7 +235,8 @@ export const CompanyManagerTab: React.FC = () => {
                   placeholder="/assets/tb-icon.png or https://..."
                   previewDarkDefault={false}
                   presets={[
-                    { label: 'TB Icon', url: '/assets/tb-icon.png' }
+                    { label: 'TB Icon (Gradient)', url: '/assets/tb-icon.png' },
+                    { label: 'TB Dark Icon', url: '/assets/tb-icon-dark.png' }
                   ]}
                 />
               </div>
@@ -265,11 +267,12 @@ export const CompanyManagerTab: React.FC = () => {
                   value={formData.logoDark || ''}
                   onChange={(newDark) => setFormData({ ...formData, logoDark: newDark })}
                   helperText="Recommended: White or radiant logo with transparent background"
-                  placeholder="/assets/tb-white-logo.png or https://..."
+                  placeholder="/assets/tb-logo-dark.png or https://..."
                   previewDarkDefault={true}
                   presets={[
-                    { label: 'TB White Logo', url: '/assets/tb-white-logo.png' },
-                    { label: 'TB Light Logo', url: '/assets/tb-logo.jpeg' }
+                    { label: 'TB Dark Logo (White Text)', url: '/assets/tb-logo-dark.png' },
+                    { label: 'TB Pure White Logo', url: '/assets/tb-logo-white.png' },
+                    { label: 'TB Light Logo', url: '/assets/tb-logo-light.png' }
                   ]}
                 />
               </div>
@@ -281,10 +284,11 @@ export const CompanyManagerTab: React.FC = () => {
                   value={formData.logoIconDark || ''}
                   onChange={(newIconDark) => setFormData({ ...formData, logoIconDark: newIconDark })}
                   helperText="Square icon for dark theme and admin dashboard"
-                  placeholder="/assets/tb-icon.png or https://..."
+                  placeholder="/assets/tb-icon-dark.png or https://..."
                   previewDarkDefault={true}
                   presets={[
-                    { label: 'TB Icon', url: '/assets/tb-icon.png' }
+                    { label: 'TB Icon (Gradient)', url: '/assets/tb-icon.png' },
+                    { label: 'TB Dark Icon', url: '/assets/tb-icon-dark.png' }
                   ]}
                 />
               </div>
@@ -319,10 +323,10 @@ export const CompanyManagerTab: React.FC = () => {
                 <div className="py-3 px-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center gap-3 w-fit max-w-full overflow-hidden">
                   {formData.logoType === 'image-only' ? (
                     <img 
-                      src={formData.logoLight || formData.logo || '/assets/tb-logo.jpeg'} 
+                      src={formData.logoLight || formData.logo || '/assets/tb-logo-light.png'} 
                       alt="Light Preview" 
                       className="h-8 max-h-10 w-auto max-w-[180px] object-contain" 
-                      onError={(e) => { e.currentTarget.src = '/assets/tb-logo.jpeg'; }}
+                      onError={(e) => { e.currentTarget.src = '/assets/tb-logo-light.png'; }}
                     />
                   ) : (
                     <>
@@ -367,10 +371,10 @@ export const CompanyManagerTab: React.FC = () => {
                 <div className="py-3 px-4 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-3 w-fit max-w-full overflow-hidden">
                   {formData.logoType === 'image-only' ? (
                     <img 
-                      src={formData.logoDark || '/assets/tb-white-logo.png'} 
+                      src={formData.logoDark || '/assets/tb-logo-dark.png'} 
                       alt="Dark Preview" 
                       className="h-8 max-h-10 w-auto max-w-[180px] object-contain" 
-                      onError={(e) => { e.currentTarget.src = '/assets/tb-white-logo.png'; }}
+                      onError={(e) => { e.currentTarget.src = '/assets/tb-logo-dark.png'; }}
                     />
                   ) : (
                     <>

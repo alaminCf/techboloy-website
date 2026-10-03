@@ -27,8 +27,9 @@ export const ImageUploadField: React.FC<ImageUploadFieldProps> = ({
   const [previewDark, setPreviewDark] = useState<boolean>(previewDarkDefault);
 
   const defaultPresetAssets = presets || [
-    { label: 'TB Light Logo', url: '/assets/tb-logo.jpeg' },
-    { label: 'TB White Logo', url: '/assets/tb-white-logo.png' },
+    { label: 'TB Light Logo', url: '/assets/tb-logo-light.png' },
+    { label: 'TB Dark Logo', url: '/assets/tb-logo-dark.png' },
+    { label: 'TB White Logo', url: '/assets/tb-logo-white.png' },
     { label: 'TB Icon', url: '/assets/tb-icon.png' },
     { label: 'Award Photo', url: '/assets/award-photo.jpg' }
   ];
