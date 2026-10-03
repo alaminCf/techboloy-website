@@ -54,7 +54,7 @@ export const EstatePilotPage: React.FC = () => {
         
         {/* Breadcrumbs */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-6">
-          <nav className="flex items-center gap-2 text-xs text-slate-500">
+          <nav className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
             <Link to="/" className="hover:text-brand-purple">Home</Link>
             <span>/</span>
             <Link to="/products" className="hover:text-brand-purple">Products</Link>
@@ -122,7 +122,7 @@ export const EstatePilotPage: React.FC = () => {
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-display">
               Built for Modern Developers & Property Managers
             </h2>
-            <p className="mt-4 text-slate-600 dark:text-slate-400 text-sm sm:text-base">
+            <p className="mt-4 text-slate-600 dark:text-slate-300 text-sm sm:text-base">
               EstatePilot replaces disconnected spreadsheets and delayed paperwork with an integrated digital workflow.
             </p>
           </div>
@@ -140,7 +140,7 @@ export const EstatePilotPage: React.FC = () => {
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
                     {mod.title}
                   </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
                     {mod.description}
                   </p>
 
@@ -167,7 +167,7 @@ export const EstatePilotPage: React.FC = () => {
                 <h3 className="text-2xl font-bold text-slate-900 dark:text-white font-display">
                   Request an EstatePilot Guided Demo
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
                   Our PropTech consultants will walk you through live building inventory management and payment schedule workflows.
                 </p>
               </div>

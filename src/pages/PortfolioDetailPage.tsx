@@ -34,7 +34,7 @@ export const PortfolioDetailPage: React.FC = () => {
         
         {/* Breadcrumb Navigation */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-6">
-          <nav className="flex items-center gap-2 text-xs text-slate-500">
+          <nav className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
             <Link to="/" className="hover:text-brand-purple">Home</Link>
             <span>/</span>
             <Link to="/portfolio" className="hover:text-brand-purple">Portfolio</Link>
@@ -46,7 +46,7 @@ export const PortfolioDetailPage: React.FC = () => {
         {/* Case Study Hero */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
           <div className="max-w-4xl space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-purple/10 text-brand-purple">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-purple/10 text-brand-purple dark:bg-brand-purple/20 dark:text-purple-300">
               <span>{project.category} Case Study</span>
             </div>
 

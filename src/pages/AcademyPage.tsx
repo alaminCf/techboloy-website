@@ -123,7 +123,7 @@ export const AcademyPage: React.FC = () => {
                   </div>
 
                   <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
-                    <span className="text-xs text-slate-500 font-medium">Level: {track.level}</span>
+                    <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Level: {track.level}</span>
                     <a
                       href={academyInfo.externalUrl}
                       target="_blank"

@@ -31,7 +31,7 @@ export const AcademySection: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide border border-brand-purple/20 bg-brand-purple/5 text-brand-purple mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide border border-brand-purple/20 bg-brand-purple/5 text-brand-purple dark:border-brand-purple/40 dark:bg-brand-purple/15 dark:text-purple-300 mb-4">
             <GraduationCap className="w-4 h-4 text-brand-magenta" />
             Techboloy Learning Ecosystem
           </div>
@@ -77,7 +77,7 @@ export const AcademySection: React.FC = () => {
                     {track.title}
                   </h3>
 
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
                     {track.description}
                   </p>
 

@@ -14,7 +14,7 @@ export const PrivacyPolicyPage: React.FC = () => {
       <div className="pt-28 pb-24 bg-white dark:bg-slate-950">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-purple/10 text-brand-purple mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-purple/10 text-brand-purple dark:bg-brand-purple/20 dark:text-purple-300 mb-4">
             <ShieldCheck className="w-3.5 h-3.5" />
             <span>Corporate Governance</span>
           </div>
@@ -22,7 +22,7 @@ export const PrivacyPolicyPage: React.FC = () => {
           <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mb-4 font-display">
             Privacy Policy
           </h1>
-          <p className="text-xs text-slate-500 mb-8">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mb-8">
             Last Updated: September 16, 2026
           </p>
 

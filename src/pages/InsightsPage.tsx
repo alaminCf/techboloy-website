@@ -73,7 +73,7 @@ export const InsightsPage: React.FC = () => {
         {/* Articles Grid */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {filteredPosts.length === 0 ? (
-            <div className="text-center py-20 text-slate-500">
+            <div className="text-center py-20 text-slate-500 dark:text-slate-400">
               No insights found matching your search.
             </div>
           ) : (

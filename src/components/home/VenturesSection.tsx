@@ -45,14 +45,14 @@ export const VenturesSection: React.FC = () => {
                   {venture.name}
                 </h3>
 
-                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
                   {venture.description}
                 </p>
 
                 {/* Highlights */}
                 <div className="space-y-1.5 pt-3 border-t border-slate-200 dark:border-slate-800 mb-6">
                   {venture.highlights.map((hl) => (
-                    <div key={hl} className="flex items-center gap-1.5 text-[11px] text-slate-600 dark:text-slate-400">
+                    <div key={hl} className="flex items-center gap-1.5 text-[11px] text-slate-600 dark:text-slate-300">
                       <CheckCircle2 className="w-3 h-3 text-brand-magenta shrink-0" />
                       <span className="truncate">{hl}</span>
                     </div>

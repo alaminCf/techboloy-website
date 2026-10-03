@@ -78,14 +78,14 @@ export const ContactPage: React.FC = () => {
         
         {/* Header */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12 text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-brand-purple/10 text-brand-purple mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-brand-purple/10 text-brand-purple dark:bg-brand-purple/20 dark:text-purple-300 mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-brand-magenta" />
             <span>Connect with Techboloy</span>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight font-display">
             Let's Build Something <span className="text-gradient-purple">Meaningful.</span>
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+          <p className="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Tell us about your organization and technical objectives. Our directors will review your scope and provide actionable technical guidance.
           </p>
         </div>
@@ -170,7 +170,7 @@ export const ContactPage: React.FC = () => {
                 />
               </div>
 
-              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-500 flex items-center gap-3">
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 flex items-center gap-3">
                 <ShieldCheck className="w-6 h-6 text-brand-purple shrink-0" />
                 <span>All project discussions and proprietary specs are protected under mutual non-disclosure (NDA).</span>
               </div>

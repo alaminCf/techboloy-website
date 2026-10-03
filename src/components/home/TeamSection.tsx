@@ -83,7 +83,7 @@ export const TeamSection: React.FC = () => {
                   <div className="text-xs font-semibold text-brand-magenta mt-0.5 mb-3">
                     {member.position}
                   </div>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
                     {member.bio}
                   </p>
 
@@ -92,7 +92,7 @@ export const TeamSection: React.FC = () => {
                     {member.specialization.map((spec) => (
                       <span
                         key={spec}
-                        className="px-2 py-0.5 rounded text-[10px] font-medium bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700"
+                        className="px-2 py-0.5 rounded text-[10px] font-medium bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
                       >
                         {spec}
                       </span>

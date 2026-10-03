@@ -36,7 +36,7 @@ export const InsightDetailPage: React.FC = () => {
         
         {/* Breadcrumb Bar */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-6">
-          <nav className="flex items-center gap-2 text-xs text-slate-500">
+          <nav className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
             <Link to="/" className="hover:text-brand-purple">Home</Link>
             <span>/</span>
             <Link to="/insights" className="hover:text-brand-purple">Insights</Link>
@@ -47,7 +47,7 @@ export const InsightDetailPage: React.FC = () => {
 
         {/* Article Header */}
         <header className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-brand-purple/10 text-brand-purple">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-brand-purple/10 text-brand-purple dark:bg-brand-purple/20 dark:text-purple-300">
             <span>{post.category}</span>
           </div>
 
@@ -59,7 +59,7 @@ export const InsightDetailPage: React.FC = () => {
             {post.excerpt}
           </p>
 
-          <div className="flex items-center justify-between pt-6 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500">
+          <div className="flex items-center justify-between pt-6 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
             <div className="flex items-center gap-3">
               <img
                 src={post.author.avatar}
@@ -70,7 +70,7 @@ export const InsightDetailPage: React.FC = () => {
                 <div className="font-bold text-slate-900 dark:text-white text-sm">
                   {post.author.name}
                 </div>
-                <div className="text-[11px] text-slate-500">{post.author.role}</div>
+                <div className="text-[11px] text-slate-500 dark:text-slate-400">{post.author.role}</div>
               </div>
             </div>
 

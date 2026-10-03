@@ -56,7 +56,7 @@ export const AboutPage: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
               
               <div className="lg:col-span-6 space-y-6">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-purple/10 text-brand-purple">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-purple/10 text-brand-purple dark:bg-brand-purple/20 dark:text-purple-300">
                   <MapPin className="w-3.5 h-3.5" />
                   <span>ICT Tower, Agargaon, Dhaka</span>
                 </div>
@@ -73,17 +73,17 @@ export const AboutPage: React.FC = () => {
                 <div className="pt-2 flex items-center gap-6">
                   <div>
                     <div className="text-2xl font-black text-brand-purple">200+</div>
-                    <div className="text-xs text-slate-500">Delivered Systems</div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400">Delivered Systems</div>
                   </div>
                   <div className="w-px h-10 bg-slate-300 dark:bg-slate-700" />
                   <div>
                     <div className="text-2xl font-black text-brand-magenta">100+</div>
-                    <div className="text-xs text-slate-500">Client Partners</div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400">Client Partners</div>
                   </div>
                   <div className="w-px h-10 bg-slate-300 dark:bg-slate-700" />
                   <div>
                     <div className="text-2xl font-black text-brand-purple">30+</div>
-                    <div className="text-xs text-slate-500">Specialists</div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400">Specialists</div>
                   </div>
                 </div>
               </div>

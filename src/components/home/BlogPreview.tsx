@@ -56,7 +56,7 @@ export const BlogPreview: React.FC = () => {
                     {post.title}
                   </h3>
 
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-2 mb-4">
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-2 mb-4">
                     {post.excerpt}
                   </p>
                 </div>
