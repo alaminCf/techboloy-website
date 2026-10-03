@@ -30,19 +30,59 @@ export const Footer: React.FC = () => {
           {/* Column 1: Brand & Headquarters (Span 4) */}
           <div className="lg:col-span-4 space-y-6">
             <Link to="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shadow-glow-sm">
-                <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-                  <img src="/assets/tb-icon.png" alt="Techboloy" className="w-8 h-8 object-contain" />
-                </div>
-              </div>
-              <div>
-                <span className="text-2xl font-extrabold tracking-tight text-white font-display">
-                  TECH<span className="text-gradient-purple">BOLOY</span>
-                </span>
-                <span className="block text-[10px] uppercase tracking-widest font-semibold text-slate-400">
-                  {company.tagline}
-                </span>
-              </div>
+              {company.logoType === 'image-only' && (company.logoDark || company.logo) ? (
+                <img 
+                  src={company.logoDark || company.logo} 
+                  alt={company.name || "Techboloy"} 
+                  className="h-10 w-auto max-w-[220px] object-contain group-hover:scale-105 transition-transform"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+              ) : (
+                <>
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shadow-glow-sm group-hover:scale-105 transition-transform shrink-0">
+                    <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden p-1">
+                      <img 
+                        src={company.logoIcon || "/assets/tb-icon.png"} 
+                        alt={company.name || "Techboloy"} 
+                        className="w-full h-full object-contain"
+                        onError={(e) => {
+                          e.currentTarget.src = "/assets/tb-icon.png";
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-2xl font-extrabold tracking-tight text-white font-display">
+                      {company.name ? (
+                        company.name.toLowerCase() === 'techboloy' ? (
+                          <>TECH<span className="text-gradient-purple">BOLOY</span></>
+                        ) : company.name.includes(' ') ? (
+                          <>
+                            {company.name.split(' ')[0]}{' '}
+                            <span className="text-gradient-purple">
+                              {company.name.split(' ').slice(1).join(' ')}
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            {company.name.slice(0, Math.ceil(company.name.length / 2))}
+                            <span className="text-gradient-purple">
+                              {company.name.slice(Math.ceil(company.name.length / 2))}
+                            </span>
+                          </>
+                        )
+                      ) : (
+                        <>TECH<span className="text-gradient-purple">BOLOY</span></>
+                      )}
+                    </span>
+                    <span className="block text-[10px] uppercase tracking-widest font-semibold text-slate-400">
+                      {company.tagline || 'Your Technology Growth Partner'}
+                    </span>
+                  </div>
+                </>
+              )}
             </Link>
 
             <p className="text-sm text-slate-400 leading-relaxed max-w-sm">

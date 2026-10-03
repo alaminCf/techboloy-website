@@ -14,9 +14,10 @@ import {
   Rocket,
   Cloud
 } from 'lucide-react';
-import { companyData } from '../../data/company';
+import { useCMS } from '../../context/CMSContext';
 
 export const Navbar: React.FC = () => {
+  const { company } = useCMS();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
@@ -63,27 +64,59 @@ export const Navbar: React.FC = () => {
           
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shadow-glow-sm">
-              <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden">
-                <img 
-                  src="/assets/tb-icon.png" 
-                  alt="Techboloy" 
-                  className="w-8 h-8 object-contain"
-                  onError={(e) => {
-                    // Fallback to text if image fails to render
-                    e.currentTarget.style.display = 'none';
-                  }}
-                />
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white font-display">
-                TECH<span className="text-gradient-purple">BOLOY</span>
-              </span>
-              <span className="text-[9px] uppercase tracking-widest font-semibold text-slate-500 dark:text-slate-400 -mt-1">
-                Growth Partner
-              </span>
-            </div>
+            {company.logoType === 'image-only' && company.logo ? (
+              <img 
+                src={company.logo} 
+                alt={company.name || "Techboloy"} 
+                className="h-9 sm:h-10 w-auto max-w-[200px] object-contain group-hover:scale-105 transition-transform"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            ) : (
+              <>
+                <div className="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shadow-glow-sm group-hover:scale-105 transition-transform shrink-0">
+                  <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden p-1">
+                    <img 
+                      src={company.logoIcon || "/assets/tb-icon.png"} 
+                      alt={company.name || "Techboloy"} 
+                      className="w-full h-full object-contain"
+                      onError={(e) => {
+                        e.currentTarget.src = "/assets/tb-icon.png";
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white font-display leading-tight">
+                    {company.name ? (
+                      company.name.toLowerCase() === 'techboloy' ? (
+                        <>TECH<span className="text-gradient-purple">BOLOY</span></>
+                      ) : company.name.includes(' ') ? (
+                        <>
+                          {company.name.split(' ')[0]}{' '}
+                          <span className="text-gradient-purple">
+                            {company.name.split(' ').slice(1).join(' ')}
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          {company.name.slice(0, Math.ceil(company.name.length / 2))}
+                          <span className="text-gradient-purple">
+                            {company.name.slice(Math.ceil(company.name.length / 2))}
+                          </span>
+                        </>
+                      )
+                    ) : (
+                      <>TECH<span className="text-gradient-purple">BOLOY</span></>
+                    )}
+                  </span>
+                  <span className="text-[9px] uppercase tracking-widest font-semibold text-slate-500 dark:text-slate-400">
+                    {company.tagline || 'Growth Partner'}
+                  </span>
+                </div>
+              </>
+            )}
           </Link>
 
           {/* Desktop Navigation */}
@@ -223,7 +256,7 @@ export const Navbar: React.FC = () => {
           <div className="hidden lg:flex items-center gap-3">
             {/* WhatsApp Quick Action */}
             <a
-              href={companyData.social.whatsapp}
+              href={company.social.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Direct WhatsApp message"
@@ -246,7 +279,7 @@ export const Navbar: React.FC = () => {
           {/* Mobile Menu Trigger */}
           <div className="flex items-center gap-2 lg:hidden">
             <a
-              href={companyData.social.whatsapp}
+              href={company.social.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Chat on WhatsApp"
@@ -349,7 +382,7 @@ export const Navbar: React.FC = () => {
               <span>Contact Techboloy</span>
             </Link>
             <a
-              href={companyData.social.whatsapp}
+              href={company.social.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full py-3 rounded-xl text-center font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 flex items-center justify-center gap-2"

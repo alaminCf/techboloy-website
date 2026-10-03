@@ -6,6 +6,10 @@ export const companyData: CompanyInfo = {
   foundedYear: 2021,
   phone: "+880 1610-296460",
   email: "contact@techboloy.com",
+  logo: "/assets/tb-white-logo.png",
+  logoIcon: "/assets/tb-icon.png",
+  logoDark: "/assets/tb-white-logo.png",
+  logoType: "icon-text",
   address: {
     line1: "E-14/X, ICT Tower (14th Floor)",
     line2: "Agargaon",

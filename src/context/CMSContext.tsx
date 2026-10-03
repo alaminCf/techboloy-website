@@ -126,7 +126,15 @@ const initialDefaultInquiries: InboundInquiry[] = [
 export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [company, setCompany] = useState<CompanyInfo>(() => {
     const saved = localStorage.getItem(`${STORAGE_KEY}_company`);
-    return saved ? JSON.parse(saved) : initialCompanyData;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        return { ...initialCompanyData, ...parsed };
+      } catch (e) {
+        return initialCompanyData;
+      }
+    }
+    return initialCompanyData;
   });
 
   const [team, setTeam] = useState<TeamMember[]>(() => {

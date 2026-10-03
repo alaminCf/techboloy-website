@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, MessageSquare, PhoneCall, Sparkles } from 'lucide-react';
-import { companyData } from '../../data/company';
-import { SectionItem } from '../../context/CMSContext';
+import { useCMS, SectionItem } from '../../context/CMSContext';
 
 interface CtaBannerProps {
   section?: SectionItem;
 }
 
 export const CtaBanner: React.FC<CtaBannerProps> = ({ section }) => {
+  const { company } = useCMS();
   const badgeText = section?.badge || "Let's Create Tomorrow Together";
   const titleText = section?.title || "Have an Idea? Let's Build It.";
   const highlight = section?.highlightWord || "Let's Build It.";
@@ -16,7 +16,7 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ section }) => {
   const ctaLabel = section?.ctaText || "Start a Project";
   const ctaUrl = section?.ctaLink || "/contact";
   const secondaryLabel = section?.secondaryCtaText || "Talk to Us via WhatsApp";
-  const secondaryUrl = section?.secondaryCtaLink || companyData.social.whatsapp;
+  const secondaryUrl = section?.secondaryCtaLink || company.social.whatsapp;
 
   return (
     <section className="py-24 sm:py-32 bg-slate-950 text-white relative overflow-hidden">
@@ -75,12 +75,12 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ section }) => {
         <div className="pt-8 border-t border-slate-800/80 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs sm:text-sm text-slate-400">
           <span>Headquarters: ICT Tower (14th Floor), Agargaon, Dhaka</span>
           <span>•</span>
-          <a href={`tel:${companyData.phone.replace(/\s+/g, '')}`} className="hover:text-white transition-colors">
-            {companyData.phone}
+          <a href={`tel:${company.phone.replace(/\s+/g, '')}`} className="hover:text-white transition-colors">
+            {company.phone}
           </a>
           <span>•</span>
-          <a href={`mailto:${companyData.email}`} className="hover:text-white transition-colors">
-            {companyData.email}
+          <a href={`mailto:${company.email}`} className="hover:text-white transition-colors">
+            {company.email}
           </a>
         </div>
 

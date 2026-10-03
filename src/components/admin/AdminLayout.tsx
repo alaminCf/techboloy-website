@@ -44,7 +44,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
   children,
 }) => {
   const navigate = useNavigate();
-  const { inquiries, exportDataJson, resetToDefaults } = useCMS();
+  const { inquiries, company, exportDataJson, resetToDefaults } = useCMS();
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   const newInquiriesCount = inquiries.filter(i => i.status === 'New').length;
@@ -81,16 +81,35 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
           {/* Brand */}
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shadow-glow-sm">
-                <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center font-bold text-white text-sm">
-                  TB
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shadow-glow-sm shrink-0">
+                <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden p-1">
+                  {company.logoIcon ? (
+                    <img 
+                      src={company.logoIcon} 
+                      alt={company.name || "TB"} 
+                      className="w-full h-full object-contain"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <span className="font-bold text-white text-xs">TB</span>
+                  )}
                 </div>
               </div>
-              <div>
-                <span className="text-xl font-black text-white tracking-tight font-display">
-                  TECH<span className="text-gradient-purple">BOLOY</span>
+              <div className="overflow-hidden">
+                <span className="text-xl font-black text-white tracking-tight font-display truncate block">
+                  {company.name ? (
+                    company.name.toLowerCase() === 'techboloy' ? (
+                      <>TECH<span className="text-gradient-purple">BOLOY</span></>
+                    ) : (
+                      <span>{company.name}</span>
+                    )
+                  ) : (
+                    <>TECH<span className="text-gradient-purple">BOLOY</span></>
+                  )}
                 </span>
-                <span className="block text-[10px] uppercase font-bold text-brand-magenta tracking-widest">
+                <span className="block text-[10px] uppercase font-bold text-brand-magenta tracking-widest truncate">
                   CMS Control Center
                 </span>
               </div>

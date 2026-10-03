@@ -12,6 +12,10 @@ export interface CompanyInfo {
   foundedYear: number;
   phone: string;
   email: string;
+  logo?: string;
+  logoIcon?: string;
+  logoDark?: string;
+  logoType?: 'icon-text' | 'image-only';
   address: {
     line1: string;
     line2: string;

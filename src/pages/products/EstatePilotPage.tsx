@@ -15,11 +15,10 @@ import {
 } from 'lucide-react';
 import { SEOHead } from '../../components/common/SEOHead';
 import { productsData } from '../../data/products';
-import { companyData } from '../../data/company';
 import { useCMS } from '../../context/CMSContext';
 
 export const EstatePilotPage: React.FC = () => {
-  const { addInquiry } = useCMS();
+  const { addInquiry, company } = useCMS();
   const product = productsData[0];
   const [demoRequested, setDemoRequested] = useState(false);
   const [formData, setFormData] = useState({
@@ -105,7 +104,7 @@ export const EstatePilotPage: React.FC = () => {
                 <ArrowRight className="w-4 h-4" />
               </a>
               <a
-                href={companyData.social.whatsapp}
+                href={company.social.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-4 rounded-xl font-semibold text-emerald-400 bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-800 transition-all flex items-center justify-center gap-2"
