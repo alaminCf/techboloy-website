@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Save, CheckCircle2, RotateCcw, Image as ImageIcon, Eye, Sun, Moon } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
 import { ImageUploadField } from '../common/ImageUploadField';
+import { getAssetUrl } from '../../utils/assets';
 
 export const CompanyManagerTab: React.FC = () => {
   const { company, updateCompany } = useCMS();
   const [formData, setFormData] = useState({
     ...company,
-    logoType: company.logoType || 'icon-text',
+    logoType: company.logoType || 'image-only',
     logo: company.logo || '/assets/tb-logo-light.png',
     logoLight: company.logoLight || company.logo || '/assets/tb-logo-light.png',
     logoDark: company.logoDark || '/assets/tb-logo-dark.png',
@@ -20,7 +21,7 @@ export const CompanyManagerTab: React.FC = () => {
   useEffect(() => {
     setFormData({
       ...company,
-      logoType: company.logoType || 'icon-text',
+      logoType: company.logoType || 'image-only',
       logo: company.logo || '/assets/tb-logo-light.png',
       logoLight: company.logoLight || company.logo || '/assets/tb-logo-light.png',
       logoDark: company.logoDark || '/assets/tb-logo-dark.png',
@@ -323,20 +324,20 @@ export const CompanyManagerTab: React.FC = () => {
                 <div className="py-3 px-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center gap-3 w-fit max-w-full overflow-hidden">
                   {formData.logoType === 'image-only' ? (
                     <img 
-                      src={formData.logoLight || formData.logo || '/assets/tb-logo-light.png'} 
+                      src={getAssetUrl(formData.logoLight || formData.logo || '/assets/tb-logo-light.png')} 
                       alt="Light Preview" 
                       className="h-8 max-h-10 w-auto max-w-[180px] object-contain" 
-                      onError={(e) => { e.currentTarget.src = '/assets/tb-logo-light.png'; }}
+                      onError={(e) => { e.currentTarget.src = getAssetUrl('/assets/tb-logo-light.png'); }}
                     />
                   ) : (
                     <>
                       <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shrink-0 shadow-sm">
                         <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center overflow-hidden p-1">
                           <img 
-                            src={formData.logoIcon || '/assets/tb-icon.png'} 
+                            src={getAssetUrl(formData.logoIcon || '/assets/tb-icon.png')} 
                             alt="Light Icon" 
                             className="w-full h-full object-contain" 
-                            onError={(e) => { e.currentTarget.src = '/assets/tb-icon.png'; }}
+                            onError={(e) => { e.currentTarget.src = getAssetUrl('/assets/tb-icon.png'); }}
                           />
                         </div>
                       </div>
@@ -371,20 +372,20 @@ export const CompanyManagerTab: React.FC = () => {
                 <div className="py-3 px-4 rounded-xl bg-slate-900 border border-slate-800 flex items-center gap-3 w-fit max-w-full overflow-hidden">
                   {formData.logoType === 'image-only' ? (
                     <img 
-                      src={formData.logoDark || '/assets/tb-logo-dark.png'} 
+                      src={getAssetUrl(formData.logoDark || '/assets/tb-logo-dark.png')} 
                       alt="Dark Preview" 
                       className="h-8 max-h-10 w-auto max-w-[180px] object-contain" 
-                      onError={(e) => { e.currentTarget.src = '/assets/tb-logo-dark.png'; }}
+                      onError={(e) => { e.currentTarget.src = getAssetUrl('/assets/tb-logo-dark.png'); }}
                     />
                   ) : (
                     <>
                       <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shrink-0 shadow-sm">
                         <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden p-1">
                           <img 
-                            src={formData.logoIconDark || formData.logoIcon || '/assets/tb-icon.png'} 
+                            src={getAssetUrl(formData.logoIconDark || formData.logoIcon || '/assets/tb-icon.png')} 
                             alt="Dark Icon" 
                             className="w-full h-full object-contain" 
-                            onError={(e) => { e.currentTarget.src = '/assets/tb-icon.png'; }}
+                            onError={(e) => { e.currentTarget.src = getAssetUrl('/assets/tb-icon.png'); }}
                           />
                         </div>
                       </div>

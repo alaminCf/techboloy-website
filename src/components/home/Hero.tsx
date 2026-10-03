@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 
 import { SectionItem } from '../../context/CMSContext';
+import { getAssetUrl } from '../../utils/assets';
 
 interface HeroProps {
   section?: SectionItem;
@@ -27,7 +28,7 @@ export const Hero: React.FC<HeroProps> = ({ section }) => {
   const ctaUrl = section?.ctaLink || "/contact";
   const secondaryLabel = section?.secondaryCtaText || "Explore Our Services";
   const secondaryUrl = section?.secondaryCtaLink || "/services";
-  const watermarkImg = section?.imageUrl || "/assets/tb-icon.png";
+  const watermarkImg = getAssetUrl(section?.imageUrl || "/assets/tb-icon.png");
 
   return (
     <section className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden bg-slate-950 text-white">

@@ -20,6 +20,7 @@ import {
   Layout
 } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
+import { getAssetUrl } from '../../utils/assets';
 
 export type AdminTab = 
   | 'overview' 
@@ -84,11 +85,11 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
               <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-magenta p-0.5 shadow-glow-sm shrink-0">
                 <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center overflow-hidden p-1">
                   <img 
-                    src={company.logoIconDark || company.logoIcon || "/assets/tb-icon.png"} 
+                    src={getAssetUrl(company.logoIconDark || company.logoIcon || "/assets/tb-icon.png")} 
                     alt={company.name || "TB"} 
                     className="w-full h-full object-contain"
                     onError={(e) => {
-                      e.currentTarget.src = "/assets/tb-icon.png";
+                      e.currentTarget.src = getAssetUrl("/assets/tb-icon.png");
                     }}
                   />
                 </div>

@@ -155,14 +155,16 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const saved = localStorage.getItem(`${STORAGE_KEY}_company`);
       if (saved) {
         const parsed = JSON.parse(saved);
+        const isLegacyLogo = !parsed.logoLight || parsed.logoLight.includes('tb-logo.jpeg') || parsed.logoDark === '/assets/tb-white-logo.png';
         return {
           ...initialCompanyData,
           ...parsed,
-          logo: parsed.logo || initialCompanyData.logo,
-          logoLight: parsed.logoLight || parsed.logo || initialCompanyData.logoLight,
-          logoDark: parsed.logoDark || initialCompanyData.logoDark,
+          logoType: isLegacyLogo ? 'image-only' : (parsed.logoType || 'image-only'),
+          logo: parsed.logo && !parsed.logo.includes('tb-logo.jpeg') ? parsed.logo : initialCompanyData.logo,
+          logoLight: parsed.logoLight && !parsed.logoLight.includes('tb-logo.jpeg') ? parsed.logoLight : initialCompanyData.logoLight,
+          logoDark: parsed.logoDark && parsed.logoDark !== '/assets/tb-white-logo.png' ? parsed.logoDark : initialCompanyData.logoDark,
           logoIcon: parsed.logoIcon || initialCompanyData.logoIcon,
-          logoIconDark: parsed.logoIconDark || parsed.logoIcon || initialCompanyData.logoIconDark,
+          logoIconDark: parsed.logoIconDark || initialCompanyData.logoIconDark,
         };
       }
     } catch (e) {

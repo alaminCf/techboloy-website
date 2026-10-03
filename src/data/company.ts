@@ -11,7 +11,7 @@ export const companyData: CompanyInfo = {
   logoDark: "/assets/tb-logo-dark.png",
   logoIcon: "/assets/tb-icon.png",
   logoIconDark: "/assets/tb-icon-dark.png",
-  logoType: "icon-text",
+  logoType: "image-only",
   address: {
     line1: "E-14/X, ICT Tower (14th Floor)",
     line2: "Agargaon",

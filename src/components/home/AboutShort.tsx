@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Award, Zap, Users, Code } from 'lucide-react';
 import { SectionHeader } from '../common/SectionHeader';
 import { SectionItem } from '../../context/CMSContext';
+import { getAssetUrl } from '../../utils/assets';
 
 interface AboutShortProps {
   section?: SectionItem;
 }
 
 export const AboutShort: React.FC<AboutShortProps> = ({ section }) => {
-  const imageSrc = section?.imageUrl || "/assets/award-photo.jpg";
+  const imageSrc = getAssetUrl(section?.imageUrl || "/assets/award-photo.jpg");
   const badgeText = section?.badge || "About Techboloy";
   const titleText = section?.title || "Built to Turn Technology Into Growth.";
   const highlight = section?.highlightWord || "Growth.";

@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Upload, Link as LinkIcon, X, Check, Sun, Moon } from 'lucide-react';
+import { getAssetUrl } from '../../utils/assets';
 
 interface ImageUploadFieldProps {
   label: string;
@@ -228,7 +229,7 @@ export const ImageUploadField: React.FC<ImageUploadFieldProps> = ({
             }`}
           >
             <img
-              src={value}
+              src={getAssetUrl(value)}
               alt="Preview"
               className="max-w-full max-h-full object-contain"
               onError={(e) => {

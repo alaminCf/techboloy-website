@@ -17,6 +17,7 @@ import {
   Moon
 } from 'lucide-react';
 import { useCMS } from '../../context/CMSContext';
+import { getAssetUrl } from '../../utils/assets';
 
 export const Navbar: React.FC = () => {
   const { company, theme, toggleTheme } = useCMS();
@@ -27,13 +28,16 @@ export const Navbar: React.FC = () => {
 
   const isDarkHeader = theme === 'dark' || (!isScrolled && location.pathname === '/');
 
-  const activeLogo = isDarkHeader 
+  const rawLogo = isDarkHeader 
     ? (company.logoDark || company.logo || '/assets/tb-logo-dark.png')
     : (company.logoLight || company.logo || '/assets/tb-logo-light.png');
 
-  const activeIcon = isDarkHeader
+  const rawIcon = isDarkHeader
     ? (company.logoIconDark || company.logoIcon || '/assets/tb-icon-dark.png')
     : (company.logoIcon || '/assets/tb-icon.png');
+
+  const activeLogo = getAssetUrl(rawLogo);
+  const activeIcon = getAssetUrl(rawIcon);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,13 +88,13 @@ export const Navbar: React.FC = () => {
           
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            {company.logoType === 'image-only' && activeLogo ? (
+            {company.logoType !== 'icon-text' && activeLogo ? (
               <img 
                 src={activeLogo} 
                 alt={company.name || "Techboloy"} 
-                className="h-9 sm:h-10 w-auto max-w-[200px] object-contain group-hover:scale-105 transition-transform"
+                className="h-10 sm:h-11 w-auto max-w-[220px] sm:max-w-[260px] object-contain group-hover:scale-105 transition-transform"
                 onError={(e) => {
-                  e.currentTarget.src = isDarkHeader ? '/assets/tb-logo-dark.png' : '/assets/tb-logo-light.png';
+                  e.currentTarget.src = getAssetUrl(isDarkHeader ? '/assets/tb-logo-dark.png' : '/assets/tb-logo-light.png');
                 }}
               />
             ) : (
@@ -104,7 +108,7 @@ export const Navbar: React.FC = () => {
                       alt={company.name || "Techboloy"} 
                       className="w-full h-full object-contain"
                       onError={(e) => {
-                        e.currentTarget.src = "/assets/tb-icon.png";
+                        e.currentTarget.src = getAssetUrl("/assets/tb-icon.png");
                       }}
                     />
                   </div>

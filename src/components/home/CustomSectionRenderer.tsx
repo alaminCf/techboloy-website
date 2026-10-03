@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
 import { SectionItem } from '../../context/CMSContext';
 import { SectionHeader } from '../common/SectionHeader';
+import { getAssetUrl } from '../../utils/assets';
 
 interface CustomSectionRendererProps {
   section: SectionItem;
@@ -174,7 +175,7 @@ export const CustomSectionRenderer: React.FC<CustomSectionRendererProps> = ({ se
             {section.imageUrl ? (
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
                 <img
-                  src={section.imageUrl}
+                  src={getAssetUrl(section.imageUrl)}
                   alt={section.imageAlt || section.title || 'Section Image'}
                   className="w-full h-80 sm:h-96 object-cover"
                 />
